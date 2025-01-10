@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scott Benninger: Contact</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="../projects/index.html">Projects</a>
+        <a href="index.html">Contact</a>
+        <a href="https://github.com/scottbenninger" target="_blank">GitHub</a>
+    </nav>
+    <h1>Contact</h1>
+    <p>This is the Contact page.</p>
+
+    <!-- Contact Form -->
+    <form action="mailto:your_email@example.com" method="POST" enctype="text/plain">
+        <!-- Sender's Email -->
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" name="email" value="example@example.com">
+        <br><br>
+
+        <!-- Subject -->
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" value="Hello Scott!">
+        <br><br>
+
+        <!-- Message Body -->
+        <label for="body">Message:</label>
+        <textarea id="body" name="body" rows="5" cols="30">This is a default message body.</textarea>
+        <br><br>
+
+        <!-- Submit Button -->
+        <button>Send Message</button>
+    </form>
+</body>
+</html>
