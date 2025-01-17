@@ -1,48 +1,50 @@
+/* Global accent color */
+:root {
+  --color-accent: oklch(65% 50% 0); /* Customize this value as needed */
+}
+
 /* Body styling */
 body {
-  /* Use OS's UI font, set line height to 1.5 times font size */
   font: 100%/1.5 system-ui;
-  max-width: 100ch; /* Constrain content width */
-  margin-inline: auto; /* Center content horizontally */
-  padding-inline: 1em; /* Add padding to prevent edge contact */
+  max-width: 100ch;
+  margin-inline: auto;
+  padding-inline: 1em;
+  accent-color: var(--color-accent); /* Set accent color for the entire body */
 }
 
 /* Navigation bar styling */
 nav {
-  display: flex;
+  display: flex; /* Use Flexbox to layout navigation */
   justify-content: space-around;
-  background-color: #f4f4f4;
-  padding: 1em 0;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid oklch(80% 3% 200); /* Subtle gray bottom border */
+  margin-bottom: 1em; /* Separate nav from the content */
+  padding: 0.5em 0;
 }
 
+/* Remove default styling from list items (if using <ul> and <li>) */
+ul, li {
+  display: contents;
+}
+
+/* Navigation links styling */
 nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+  flex: 1; /* Distribute space equally among links */
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit text color */
+  text-align: center; /* Center text in the link */
+  padding: 0.5em; /* Add spacing around links */
+  border-bottom: 0.4em solid transparent; /* Invisible border for spacing */
+  transition: border-color 0.3s, background-color 0.3s; /* Smooth hover effect */
 }
 
+/* Styling the current page link */
+nav a.current {
+  border-bottom: 0.4em solid oklch(80% 3% 200); /* Thicker border for current page */
+  padding-bottom: 0.1em; /* Adjust padding to counter border height */
+}
+
+/* Hover effects */
 nav a:hover {
-  color: #007BFF;
-}
-
-/* Headings and paragraph */
-h1 {
-  text-align: center;
-  margin-top: 1em;
-  color: #333;
-}
-
-p {
-  text-align: center;
-  margin-top: 1em;
-}
-
-/* Image styling */
-img {
-  display: block;
-  margin: 1em auto;
-  border-radius: 8px;
-  max-width: 100%; /* Ensure responsiveness for smaller screens */
-  height: auto; /* Maintain aspect ratio */
+  border-bottom: 0.4em solid var(--color-accent); /* Accent color on hover */
+  background-color: oklch(from var(--color-accent) 95% 5% h); /* Light accent background */
 }
