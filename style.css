@@ -1,81 +1,52 @@
-/* General styling */
-body {
-  font: 100%/1.5 system-ui;
-  max-width: 100ch;
-  margin-inline: auto;
-  padding-inline: 1em;
-  accent-color: var(--color-accent);
+/* Projects grid container */
+.projects {
+  display: grid; /* Enable grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); /* Flexible columns */
+  gap: 1em; /* Space between articles */
+  padding: 1em; /* Add padding inside the container */
 }
 
-/* Navigation styling */
-nav {
-  display: flex;
-  justify-content: space-around;
-  border-bottom: 1px solid oklch(80% 3% 200);
-  margin-bottom: 1em;
-  padding: 0.5em 0;
+/* Project articles */
+.projects article {
+  display: grid; /* Make each article a grid container */
+  grid-template-rows: subgrid; /* Align content across rows */
+  grid-row: span 3; /* Span three rows */
+  border: 1px solid #ccc; /* Light border for separation */
+  border-radius: 8px; /* Rounded corners */
+  padding: 1em; /* Padding inside articles */
+  background-color: #f9f9f9; /* Light background color */
 }
 
-nav a {
-  flex: 1;
-  text-decoration: none;
-  color: inherit;
-  text-align: center;
-  padding: 0.5em;
-  border-bottom: 0.4em solid transparent;
-  transition: border-color 0.3s, background-color 0.3s;
+/* Headings inside articles */
+.projects h2 {
+  margin: 0; /* Remove default margin */
+  font-size: 1.25em; /* Adjust size */
+  text-wrap: balance; /* Improve line wrapping */
 }
 
-nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200);
-  padding-bottom: 0.1em;
-}
-
-nav a:hover {
-  border-bottom: 0.4em solid var(--color-accent);
-  background-color: oklch(from var(--color-accent) 95% 5% h);
-}
-
-/* Form styling */
-form {
-  display: grid; /* Enable CSS Grid */
-  grid-template-columns: auto 1fr; /* Two columns: labels and inputs */
-  gap: 1em; /* Add space between rows */
-  max-width: 600px; /* Limit form width */
-  margin: 0 auto; /* Center the form on the page */
-}
-
-label {
-  grid-column: 1; /* Place labels in the first column */
-  font-weight: bold;
-}
-
-input, textarea {
-  grid-column: 2; /* Place inputs and textareas in the second column */
-  font: inherit; /* Match the font with the rest of the page */
+/* Images inside articles */
+.projects img {
   width: 100%; /* Full width of container */
-  padding: 0.5em;
-  box-sizing: border-box; /* Include padding and border in width */
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 0.5em; /* Space below image */
+  border-radius: 4px; /* Slightly rounded corners */
 }
 
-textarea {
-  resize: vertical; /* Allow vertical resizing only */
+/* Paragraphs inside articles */
+.projects p {
+  margin: 0; /* Remove default margin */
+  font-size: 1em; /* Standard text size */
+  line-height: 1.5; /* Readable line height */
 }
 
-button {
-  grid-column: 1 / -1; /* Span across all columns */
-  padding: 0.5em 1em;
-  font: inherit;
-  background-color: var(--color-accent);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+/* Heading size and line-height adjustments for all pages */
+h1 {
+  font-size: 400%; /* Significantly larger for better hierarchy */
+  line-height: 1.1; /* Smaller line-height */
+  text-wrap: balance; /* Balance text wrapping */
 }
 
-button:hover {
-  background-color: oklch(55% 50% 0); /* Slightly darker accent color */
+h2, h3, h4, h5, h6 {
+  line-height: 1.1;
+  text-wrap: balance;
 }
