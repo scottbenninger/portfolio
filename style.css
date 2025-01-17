@@ -1,50 +1,81 @@
-/* Global accent color */
-:root {
-  --color-accent: oklch(65% 50% 0); /* Customize this value as needed */
-}
-
-/* Body styling */
+/* General styling */
 body {
   font: 100%/1.5 system-ui;
   max-width: 100ch;
   margin-inline: auto;
   padding-inline: 1em;
-  accent-color: var(--color-accent); /* Set accent color for the entire body */
+  accent-color: var(--color-accent);
 }
 
-/* Navigation bar styling */
+/* Navigation styling */
 nav {
-  display: flex; /* Use Flexbox to layout navigation */
+  display: flex;
   justify-content: space-around;
-  border-bottom: 1px solid oklch(80% 3% 200); /* Subtle gray bottom border */
-  margin-bottom: 1em; /* Separate nav from the content */
+  border-bottom: 1px solid oklch(80% 3% 200);
+  margin-bottom: 1em;
   padding: 0.5em 0;
 }
 
-/* Remove default styling from list items (if using <ul> and <li>) */
-ul, li {
-  display: contents;
-}
-
-/* Navigation links styling */
 nav a {
-  flex: 1; /* Distribute space equally among links */
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Inherit text color */
-  text-align: center; /* Center text in the link */
-  padding: 0.5em; /* Add spacing around links */
-  border-bottom: 0.4em solid transparent; /* Invisible border for spacing */
-  transition: border-color 0.3s, background-color 0.3s; /* Smooth hover effect */
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  padding: 0.5em;
+  border-bottom: 0.4em solid transparent;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
-/* Styling the current page link */
 nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200); /* Thicker border for current page */
-  padding-bottom: 0.1em; /* Adjust padding to counter border height */
+  border-bottom: 0.4em solid oklch(80% 3% 200);
+  padding-bottom: 0.1em;
 }
 
-/* Hover effects */
 nav a:hover {
-  border-bottom: 0.4em solid var(--color-accent); /* Accent color on hover */
-  background-color: oklch(from var(--color-accent) 95% 5% h); /* Light accent background */
+  border-bottom: 0.4em solid var(--color-accent);
+  background-color: oklch(from var(--color-accent) 95% 5% h);
+}
+
+/* Form styling */
+form {
+  display: grid; /* Enable CSS Grid */
+  grid-template-columns: auto 1fr; /* Two columns: labels and inputs */
+  gap: 1em; /* Add space between rows */
+  max-width: 600px; /* Limit form width */
+  margin: 0 auto; /* Center the form on the page */
+}
+
+label {
+  grid-column: 1; /* Place labels in the first column */
+  font-weight: bold;
+}
+
+input, textarea {
+  grid-column: 2; /* Place inputs and textareas in the second column */
+  font: inherit; /* Match the font with the rest of the page */
+  width: 100%; /* Full width of container */
+  padding: 0.5em;
+  box-sizing: border-box; /* Include padding and border in width */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea {
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+button {
+  grid-column: 1 / -1; /* Span across all columns */
+  padding: 0.5em 1em;
+  font: inherit;
+  background-color: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: oklch(55% 50% 0); /* Slightly darker accent color */
 }
