@@ -127,3 +127,58 @@ button:hover {
   margin: 0.5em 0 0; /* Add spacing below paragraph */
   font-size: 1em; /* Ensure readable text size */
 }
+
+
+/* CV Page Styling */
+body {
+  background-color: #f5f5f5; /* Light background for better readability */
+  color: #333; /* Dark text for contrast */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Professional font */
+}
+
+h1, h2, h3 {
+  font-weight: bold; /* Strong emphasis for headings */
+  margin-bottom: 0.5em;
+  text-transform: uppercase; /* Add a professional touch */
+  border-bottom: 2px solid var(--color-accent); /* Accent underline */
+  padding-bottom: 0.2em;
+}
+
+section {
+  background-color: #fff; /* White background for content sections */
+  border-radius: 8px; /* Rounded corners for modern design */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 1.5em; /* Add spacing inside sections */
+  margin-bottom: 2em; /* Space between sections */
+}
+
+header {
+  margin-bottom: 1em; /* Space below headers */
+}
+
+p, ul, li {
+  margin-bottom: 0.8em; /* Consistent spacing */
+}
+
+ul {
+  padding-left: 1.5em; /* Indent lists */
+}
+
+ul li {
+  list-style: disc; /* Use bullet points for lists */
+}
+
+time {
+  font-style: italic; /* Highlight time periods */
+  color: #666; /* Subtle text color for time */
+}
+
+a {
+  color: var(--color-accent); /* Use accent color for links */
+  text-decoration: none; /* Remove underline for clean look */
+}
+
+a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
