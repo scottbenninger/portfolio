@@ -1,7 +1,48 @@
+/* Body styling */
 body {
-    /* Set line height to 1.5 times the font size
-         and use the OS’s UI font as the website font
-       */
-    font: 100%/1.5 system-ui;
-  }
-  
+  /* Use OS's UI font, set line height to 1.5 times font size */
+  font: 100%/1.5 system-ui;
+  max-width: 100ch; /* Constrain content width */
+  margin-inline: auto; /* Center content horizontally */
+  padding-inline: 1em; /* Add padding to prevent edge contact */
+}
+
+/* Navigation bar styling */
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f4f4f4;
+  padding: 1em 0;
+  border-bottom: 1px solid #ccc;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #007BFF;
+}
+
+/* Headings and paragraph */
+h1 {
+  text-align: center;
+  margin-top: 1em;
+  color: #333;
+}
+
+p {
+  text-align: center;
+  margin-top: 1em;
+}
+
+/* Image styling */
+img {
+  display: block;
+  margin: 1em auto;
+  border-radius: 8px;
+  max-width: 100%; /* Ensure responsiveness for smaller screens */
+  height: auto; /* Maintain aspect ratio */
+}
