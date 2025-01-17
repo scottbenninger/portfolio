@@ -94,6 +94,7 @@ button:hover {
   background-color: oklch(55% 50% 0); /* Slightly darker accent color */
 }
 
+/* Projects page styling */
 .projects {
   display: grid; /* Enable grid layout */
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); /* Responsive grid */
@@ -102,8 +103,12 @@ button:hover {
 
 .projects article {
   display: grid; /* Enable grid inside articles */
-  grid-template-rows: subgrid; /* Align items using subgrid */
+  grid-template-rows: auto; /* Define rows for subgrid alignment */
   grid-row: span 3; /* Each article spans 3 rows */
+  border: 1px solid #ccc; /* Add subtle border around each project */
+  padding: 1em; /* Add spacing inside each article */
+  border-radius: 8px; /* Add rounded corners */
+  background-color: #f9f9f9; /* Add a light background for better contrast */
 }
 
 .projects img {
@@ -120,16 +125,5 @@ button:hover {
 
 .projects p {
   margin: 0.5em 0 0; /* Add spacing below paragraph */
+  font-size: 1em; /* Ensure readable text size */
 }
-
-/* General heading styles */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.1; /* Reduce leading for all headings */
-  text-wrap: balance; /* Prevent uneven lines for all headings */
-}
-
-h1 {
-  font-size: 400%; /* Make the main heading significantly larger */
-}
-
-
