@@ -1,39 +1,52 @@
+/* Root styling */
+:root {
+  --color-accent: oklch(65% 50% 0); /* Define the accent color */
+}
+
+html {
+  accent-color: var(--color-accent); /* Set accent color for the entire document */
+}
+
 /* General styling */
 body {
   font: 100%/1.5 system-ui;
-  max-width: 100ch;
-  margin-inline: auto;
-  padding-inline: 1em;
-  accent-color: var(--color-accent);
+  max-width: 100ch; /* Restrict content width */
+  margin-inline: max(1em, (100% - 100ch) / 2); /* Center content with a lower bound for margin */
+  padding-inline: 1em; /* Add padding to prevent content from touching edges */
 }
 
 /* Navigation styling */
 nav {
-  display: flex;
-  justify-content: space-around;
-  border-bottom: 1px solid oklch(80% 3% 200);
-  margin-bottom: 1em;
-  padding: 0.5em 0;
+  display: flex; /* Enable Flexbox for navigation layout */
+  justify-content: space-around; /* Space out items evenly */
+  border-bottom: 1px solid oklch(80% 3% 200); /* Subtle bottom border */
+  margin-bottom: 1em; /* Separate navigation from the rest of the content */
+  padding: 0.5em 0; /* Add vertical padding */
+}
+
+nav ul,
+nav li {
+  display: contents; /* Remove list styling */
 }
 
 nav a {
-  flex: 1;
-  text-decoration: none;
-  color: inherit;
-  text-align: center;
-  padding: 0.5em;
-  border-bottom: 0.4em solid transparent;
-  transition: border-color 0.3s, background-color 0.3s;
+  flex: 1; /* Equal space for each link */
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Use parent's text color */
+  text-align: center; /* Center text within each link */
+  padding: 0.5em; /* Add spacing inside links */
+  border-bottom: 0.4em solid transparent; /* Add bottom border for hover effect */
+  transition: border-color 0.3s, background-color 0.3s; /* Smooth transition effects */
 }
 
 nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200);
-  padding-bottom: 0.1em;
+  border-bottom: 0.4em solid oklch(80% 3% 200); /* Highlight current page link */
+  padding-bottom: 0.1em; /* Adjust padding to counter height increase */
 }
 
 nav a:hover {
-  border-bottom: 0.4em solid var(--color-accent);
-  background-color: oklch(from var(--color-accent) 95% 5% h);
+  border-bottom: 0.4em solid var(--color-accent); /* Add accent color on hover */
+  background-color: oklch(from var(--color-accent) 95% 5% h); /* Light background with same hue */
 }
 
 /* Form styling */
@@ -50,7 +63,8 @@ label {
   font-weight: bold;
 }
 
-input, textarea {
+input,
+textarea {
   grid-column: 2; /* Place inputs and textareas in the second column */
   font: inherit; /* Match the font with the rest of the page */
   width: 100%; /* Full width of container */
@@ -68,12 +82,12 @@ button {
   grid-column: 1 / -1; /* Span across all columns */
   padding: 0.5em 1em;
   font: inherit;
-  background-color: var(--color-accent);
+  background-color: var(--color-accent); /* Accent color */
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s; /* Smooth hover effect */
 }
 
 button:hover {
