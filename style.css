@@ -93,3 +93,43 @@ button {
 button:hover {
   background-color: oklch(55% 50% 0); /* Slightly darker accent color */
 }
+
+.projects {
+  display: grid; /* Enable grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); /* Responsive grid */
+  gap: 1em; /* Add spacing between grid items */
+}
+
+.projects article {
+  display: grid; /* Enable grid inside articles */
+  grid-template-rows: subgrid; /* Align items using subgrid */
+  grid-row: span 3; /* Each article spans 3 rows */
+}
+
+.projects img {
+  width: 100%; /* Ensure images fit within the grid */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.projects h2 {
+  margin: 0; /* Remove default margin */
+  font-size: 1.5em; /* Adjust font size for headings */
+  line-height: 1.1; /* Slightly tighter line height */
+  text-wrap: balance; /* Prevent uneven lines */
+}
+
+.projects p {
+  margin: 0.5em 0 0; /* Add spacing below paragraph */
+}
+
+/* General heading styles */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1; /* Reduce leading for all headings */
+  text-wrap: balance; /* Prevent uneven lines for all headings */
+}
+
+h1 {
+  font-size: 400%; /* Make the main heading significantly larger */
+}
+
+
