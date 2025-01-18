@@ -1,184 +1,181 @@
 /* Root styling */
 :root {
-  --color-accent: oklch(65% 50% 0); /* Define the accent color */
+  --color-accent: oklch(65% 50% 0);
 }
 
 html {
-  accent-color: var(--color-accent); /* Set accent color for the entire document */
+  accent-color: var(--color-accent);
 }
 
 /* General styling */
 body {
   font: 100%/1.5 system-ui;
-  max-width: 100ch; /* Restrict content width */
-  margin-inline: max(1em, (100% - 100ch) / 2); /* Center content with a lower bound for margin */
-  padding-inline: 1em; /* Add padding to prevent content from touching edges */
+  max-width: 100ch;
+  margin-inline: max(1em, (100% - 100ch) / 2);
+  padding-inline: 1em;
 }
 
 /* Navigation styling */
 nav {
-  display: flex; /* Enable Flexbox for navigation layout */
-  justify-content: space-around; /* Space out items evenly */
-  border-bottom: 1px solid oklch(80% 3% 200); /* Subtle bottom border */
-  margin-bottom: 1em; /* Separate navigation from the rest of the content */
-  padding: 0.5em 0; /* Add vertical padding */
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid oklch(80% 3% 200);
+  margin-bottom: 1em;
+  padding: 0.5em 0;
 }
 
 nav ul,
 nav li {
-  display: contents; /* Remove list styling */
+  display: contents;
 }
 
 nav a {
-  flex: 1; /* Equal space for each link */
-  text-decoration: none; /* Remove underline from links */
-  color: inherit; /* Use parent's text color */
-  text-align: center; /* Center text within each link */
-  padding: 0.5em; /* Add spacing inside links */
-  border-bottom: 0.4em solid transparent; /* Add bottom border for hover effect */
-  transition: border-color 0.3s, background-color 0.3s; /* Smooth transition effects */
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+  padding: 0.5em;
+  border-bottom: 0.4em solid transparent;
+  transition: border-color 0.3s, background-color 0.3s;
 }
 
 nav a.current {
-  border-bottom: 0.4em solid oklch(80% 3% 200); /* Highlight current page link */
-  padding-bottom: 0.1em; /* Adjust padding to counter height increase */
+  border-bottom: 0.4em solid oklch(80% 3% 200);
+  padding-bottom: 0.1em;
 }
 
 nav a:hover {
-  border-bottom: 0.4em solid var(--color-accent); /* Add accent color on hover */
-  background-color: oklch(from var(--color-accent) 95% 5% h); /* Light background with same hue */
+  border-bottom: 0.4em solid var(--color-accent);
+  background-color: oklch(from var(--color-accent) 95% 5% h);
 }
 
 /* Form styling */
 form {
-  display: grid; /* Enable CSS Grid */
-  grid-template-columns: auto 1fr; /* Two columns: labels and inputs */
-  gap: 1em; /* Add space between rows */
-  max-width: 600px; /* Limit form width */
-  margin: 0 auto; /* Center the form on the page */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 label {
-  grid-column: 1; /* Place labels in the first column */
+  grid-column: 1;
   font-weight: bold;
 }
 
 input,
 textarea {
-  grid-column: 2; /* Place inputs and textareas in the second column */
-  font: inherit; /* Match the font with the rest of the page */
-  width: 100%; /* Full width of container */
+  grid-column: 2;
+  font: inherit;
+  width: 100%;
   padding: 0.5em;
-  box-sizing: border-box; /* Include padding and border in width */
+  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 textarea {
-  resize: vertical; /* Allow vertical resizing only */
+  resize: vertical;
 }
 
 button {
-  grid-column: 1 / -1; /* Span across all columns */
+  grid-column: 1 / -1;
   padding: 0.5em 1em;
   font: inherit;
-  background-color: var(--color-accent); /* Accent color */
+  background-color: var(--color-accent);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Smooth hover effect */
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: oklch(55% 50% 0); /* Slightly darker accent color */
+  background-color: oklch(55% 50% 0);
 }
 
 /* Projects page styling */
 .projects {
-  display: grid; /* Enable grid layout */
-  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); /* Responsive grid */
-  gap: 1em; /* Add spacing between grid items */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 1em;
 }
 
 .projects article {
-  display: grid; /* Enable grid inside articles */
-  grid-template-rows: auto; /* Define rows for subgrid alignment */
-  grid-row: span 3; /* Each article spans 3 rows */
-  border: 1px solid #ccc; /* Add subtle border around each project */
-  padding: 1em; /* Add spacing inside each article */
-  border-radius: 8px; /* Add rounded corners */
-  background-color: #f9f9f9; /* Add a light background for better contrast */
+  display: grid;
+  grid-template-rows: auto;
+  grid-row: span 3;
+  border: 1px solid #ccc;
+  padding: 1em;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
 .projects img {
-  width: 100%; /* Ensure images fit within the grid */
-  height: auto; /* Maintain aspect ratio */
+  width: 100%;
+  height: auto;
 }
 
 .projects h2 {
-  margin: 0; /* Remove default margin */
-  font-size: 1.5em; /* Adjust font size for headings */
-  line-height: 1.1; /* Slightly tighter line height */
-  text-wrap: balance; /* Prevent uneven lines */
+  margin: 0;
+  font-size: 1.5em;
+  line-height: 1.1;
+  text-wrap: balance;
 }
 
 .projects p {
-  margin: 0.5em 0 0; /* Add spacing below paragraph */
-  font-size: 1em; /* Ensure readable text size */
+  margin: 0.5em 0 0;
+  font-size: 1em;
 }
 
-
-/* CV Page Styling */
 body {
-  background-color: #f5f5f5; /* Light background for better readability */
-  color: #333; /* Dark text for contrast */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Professional font */
+  background-color: #f5f5f5;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1, h2, h3 {
-  font-weight: bold; /* Strong emphasis for headings */
+  font-weight: bold;
   margin-bottom: 0.5em;
-  text-transform: uppercase; /* Add a professional touch */
-  border-bottom: 2px solid var(--color-accent); /* Accent underline */
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--color-accent);
   padding-bottom: 0.2em;
 }
 
 section {
-  background-color: #fff; /* White background for content sections */
-  border-radius: 8px; /* Rounded corners for modern design */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  padding: 1.5em; /* Add spacing inside sections */
-  margin-bottom: 2em; /* Space between sections */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5em;
+  margin-bottom: 2em;
 }
 
 header {
-  margin-bottom: 1em; /* Space below headers */
+  margin-bottom: 1em;
 }
 
 p, ul, li {
-  margin-bottom: 0.8em; /* Consistent spacing */
+  margin-bottom: 0.8em;
 }
 
 ul {
-  padding-left: 1.5em; /* Indent lists */
+  padding-left: 1.5em;
 }
 
 ul li {
-  list-style: disc; /* Use bullet points for lists */
+  list-style: disc;
 }
 
 time {
-  font-style: italic; /* Highlight time periods */
-  color: #666; /* Subtle text color for time */
+  font-style: italic;
+  color: #666;
 }
 
 a {
-  color: var(--color-accent); /* Use accent color for links */
-  text-decoration: none; /* Remove underline for clean look */
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline; /* Add underline on hover */
+  text-decoration: underline;
 }
-
