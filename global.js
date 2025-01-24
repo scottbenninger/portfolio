@@ -41,7 +41,31 @@ const pages = [
     }
     nav.append(a);
   }
-
+  document.body.insertAdjacentHTML(
+    'afterbegin',
+    `
+    <label class="color-scheme">
+      Theme:
+      <select id="theme-switch">
+        <option value="light dark">Automatic</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </label>
+  `);
+  
+  const themeSwitch = document.querySelector('#theme-switch');
+  themeSwitch.addEventListener('input', (event) => {
+    const colorScheme = event.target.value;
+    document.documentElement.style.setProperty('color-scheme', colorScheme);
+    localStorage.colorScheme = colorScheme;
+  });
+  
+  if ('colorScheme' in localStorage) {
+    const savedScheme = localStorage.colorScheme;
+    document.documentElement.style.setProperty('color-scheme', savedScheme);
+    themeSwitch.value = savedScheme;
+  }
 
 
   
