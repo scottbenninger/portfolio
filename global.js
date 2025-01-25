@@ -60,12 +60,19 @@ document.body.insertAdjacentHTML(
   
   // Function to apply the theme
   function applyTheme(theme) {
-    document.documentElement.style.setProperty('color-scheme', theme);
+    if (theme === 'light dark') {
+      // Follow system preferences for automatic mode
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.style.setProperty('color-scheme', systemPrefersDark ? 'dark' : 'light');
+    } else {
+      // Apply the selected theme (light or dark)
+      document.documentElement.style.setProperty('color-scheme', theme);
+    }
   }
   
-  // Function to load the saved theme or default
+  // Function to load the saved theme or fallback to automatic
   function loadTheme() {
-    const savedTheme = localStorage.getItem('colorScheme') || 'light dark';
+    const savedTheme = localStorage.getItem('colorScheme') || 'light dark'; // Default to Automatic
     applyTheme(savedTheme);
     themeSwitcher.value = savedTheme; // Sync dropdown with saved theme
   }
