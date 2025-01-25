@@ -41,30 +41,31 @@ const pages = [
     }
     nav.append(a);
   }
-  // Add the theme switcher dropdown to the page
-document.body.insertAdjacentHTML(
+  document.body.insertAdjacentHTML(
     'afterbegin',
     `
     <label class="color-scheme">
       Theme:
-      <select id="theme-switcher">
+      <select id="theme-switch">
         <option value="light dark">Automatic</option>
         <option value="light">Light</option>
         <option value="dark">Dark</option>
       </select>
     </label>
-    `
-  );
+  `);
   
-  const select = document.querySelector('#theme-switcher');
+  const themeSwitch = document.querySelector('#theme-switch');
+  themeSwitch.addEventListener('input', (event) => {
+    const colorScheme = event.target.value;
+    document.documentElement.style.setProperty('color-scheme', colorScheme);
+    localStorage.colorScheme = colorScheme;
+  });
   
-  // Check if a color scheme is saved in localStorage and apply it
-  if ("colorScheme" in localStorage) {
+  if ('colorScheme' in localStorage) {
     const savedScheme = localStorage.colorScheme;
     document.documentElement.style.setProperty('color-scheme', savedScheme);
-    select.value = savedScheme; // Update the dropdown to reflect the saved value
+    themeSwitch.value = savedScheme;
   }
-  
 
 
   
