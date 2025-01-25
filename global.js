@@ -42,39 +42,33 @@ for (let p of pages) {
 
 // Add the theme switcher dropdown to the page
 document.body.insertAdjacentHTML(
-  'afterbegin',
-  `
-    <label class="color-scheme">
-      Theme:
-      <select id="theme-switcher">
-        <option value="light dark">Automatic</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select>
-    </label>
-  `
-);
-
-// Reference to the theme switcher dropdown
-const select = document.querySelector('#theme-switcher');
-
-// Function to set the theme
-function setTheme(scheme) {
-  document.documentElement.style.setProperty('color-scheme', scheme);
-  localStorage.colorScheme = scheme; // Save the preference
-}
-
-// Apply the saved theme immediately on page load
-if ("colorScheme" in localStorage) {
-  const savedScheme = localStorage.colorScheme;
-  setTheme(savedScheme); // Apply the saved theme
-  select.value = savedScheme; // Update the dropdown
-} else {
-  setTheme('light dark'); // Default to automatic if nothing is saved
-}
-
-// Update the theme when the user changes it
-select.addEventListener('input', (event) => {
-  const newScheme = event.target.value;
-  setTheme(newScheme);
-});
+    'afterbegin',
+    `
+      <label class="color-scheme">
+        Theme:
+        <select id="theme-switcher">
+          <option value="light dark">Automatic</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+    `
+  );
+  
+  // Reference the theme switcher dropdown
+  const select = document.querySelector('#theme-switcher');
+  
+  // Check if a color scheme is saved in localStorage and apply it
+  if ("colorScheme" in localStorage) {
+    const savedScheme = localStorage.colorScheme;
+    document.documentElement.style.setProperty('color-scheme', savedScheme); // Apply the saved theme
+    select.value = savedScheme; // Update the dropdown to reflect the saved value
+  }
+  
+  // Add an event listener to save the user's preference when it changes
+  select.addEventListener('input', (event) => {
+    const colorScheme = event.target.value;
+    document.documentElement.style.setProperty('color-scheme', colorScheme); // Apply the selected theme
+    localStorage.colorScheme = colorScheme; // Save the preference
+  });
+  
