@@ -63,17 +63,17 @@ document.body.insertAdjacentHTML(
     document.documentElement.style.setProperty('color-scheme', theme);
   }
   
-  // Load the saved theme from localStorage and apply it
-  if (localStorage.getItem('colorScheme')) {
-    const savedTheme = localStorage.getItem('colorScheme');
+  // Function to load the saved theme or default
+  function loadTheme() {
+    const savedTheme = localStorage.getItem('colorScheme') || 'light dark';
     applyTheme(savedTheme);
-    themeSwitcher.value = savedTheme; // Update dropdown to match saved theme
-  } else {
-    // Default to automatic if no theme is saved
-    applyTheme('light dark');
+    themeSwitcher.value = savedTheme; // Sync dropdown with saved theme
   }
   
-  // Save and apply theme whenever user changes it
+  // Apply the saved theme when the page loads
+  loadTheme();
+  
+  // Save and apply theme whenever the user changes it
   themeSwitcher.addEventListener('input', (event) => {
     const selectedTheme = event.target.value;
     applyTheme(selectedTheme);
