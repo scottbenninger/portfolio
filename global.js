@@ -60,8 +60,8 @@ document.body.insertAdjacentHTML(
 
 // Function to apply the color scheme
 function setColorScheme(colorScheme) {
+  // Update the color scheme on the root element
   document.documentElement.style.setProperty('color-scheme', colorScheme);
-  localStorage.colorScheme = colorScheme; // Save preference
 }
 
 // Reference to the theme dropdown
@@ -70,14 +70,15 @@ const themeSwitch = document.querySelector('#theme-switch');
 // Event listener for dropdown changes
 themeSwitch.addEventListener('input', (event) => {
   const colorScheme = event.target.value;
-  setColorScheme(colorScheme); // Apply and save the selected theme
+  setColorScheme(colorScheme); // Apply the selected theme
+  localStorage.setItem('colorScheme', colorScheme); // Save to localStorage
 });
 
 // On page load, read and apply saved color scheme
-if ('colorScheme' in localStorage) {
-  const savedScheme = localStorage.colorScheme;
+const savedScheme = localStorage.getItem('colorScheme');
+if (savedScheme) {
   setColorScheme(savedScheme); // Apply the saved theme
-  themeSwitch.value = savedScheme; // Sync dropdown
+  themeSwitch.value = savedScheme; // Sync dropdown with saved value
 } else {
   // Default to automatic if no preference is saved
   setColorScheme('light dark');
