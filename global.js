@@ -42,39 +42,40 @@ for (let p of pages) {
   nav.append(a);
 }
 
-// Apply the saved theme on page load
-if ('colorScheme' in localStorage) {
-  const savedScheme = localStorage.colorScheme;
-  document.documentElement.style.setProperty('color-scheme', savedScheme);
-} else {
-  // Set to automatic if no preference is found
-  document.documentElement.style.setProperty('color-scheme', 'light dark');
-}
-
-// Add the theme switcher to the page
+// Add the theme switcher dropdown to the page
 document.body.insertAdjacentHTML(
   'afterbegin',
   `
     <label class="color-scheme">
       Theme:
-      <select id="theme-switch">
+      <select id="theme-switcher">
         <option value="light dark">Automatic</option>
         <option value="light">Light</option>
         <option value="dark">Dark</option>
       </select>
-    </label>`
+    </label>
+  `
 );
 
-const themeSwitch = document.querySelector('#theme-switch');
+// Reference to the theme switcher dropdown
+const select = document.querySelector('#theme-switcher');
 
-// Set the dropdown to the saved scheme
-if ('colorScheme' in localStorage) {
-  themeSwitch.value = localStorage.colorScheme;
+// Function to set the theme
+function setTheme(scheme) {
+  document.documentElement.style.setProperty('color-scheme', scheme);
+  localStorage.colorScheme = scheme; // Save the preference
+}
+
+// Apply saved theme immediately on page load
+if ("colorScheme" in localStorage) {
+  const savedScheme = localStorage.colorScheme;
+  setTheme(savedScheme); // Apply the saved theme
+  select.value = savedScheme; // Update the dropdown
+} else {
+  setTheme('light dark'); // Default to automatic if nothing is saved
 }
 
 // Update the theme when the user changes it
-themeSwitch.addEventListener('input', (event) => {
-  const colorScheme = event.target.value;
-  document.documentElement.style.setProperty('color-scheme', colorScheme);
-  localStorage.colorScheme = colorScheme;
+select.addEventListener('input', (event) => {
+  setTheme(event.target.value);
 });
