@@ -55,35 +55,25 @@ document.body.insertAdjacentHTML(
     `
   );
   
-  // Reference the theme switcher dropdown
+  // Reference to the theme switcher dropdown
   const themeSwitcher = document.querySelector('#theme-switcher');
   
-  // Function to apply the theme
-  function applyTheme(theme) {
-    if (theme === 'light dark') {
-      // Follow system preferences for automatic mode
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.style.setProperty('color-scheme', systemPrefersDark ? 'dark' : 'light');
-    } else {
-      // Apply the selected theme (light or dark)
-      document.documentElement.style.setProperty('color-scheme', theme);
-    }
+  // Function to set the color scheme
+  function setColorScheme(colorScheme) {
+    document.documentElement.style.setProperty('color-scheme', colorScheme); // Apply theme
+    localStorage.colorScheme = colorScheme; // Save theme to localStorage
   }
   
-  // Function to load the saved theme or fallback to automatic
-  function loadTheme() {
-    const savedTheme = localStorage.getItem('colorScheme') || 'light dark'; // Default to Automatic
-    applyTheme(savedTheme);
-    themeSwitcher.value = savedTheme; // Sync dropdown with saved theme
+  // Load the saved theme from localStorage when the page loads
+  if ('colorScheme' in localStorage) {
+    const savedColorScheme = localStorage.colorScheme; // Retrieve saved theme
+    setColorScheme(savedColorScheme); // Apply saved theme
+    themeSwitcher.value = savedColorScheme; // Update dropdown to match saved theme
   }
   
-  // Apply the saved theme when the page loads
-  loadTheme();
-  
-  // Save and apply theme whenever the user changes it
+  // Add event listener to the dropdown to save and apply the selected theme
   themeSwitcher.addEventListener('input', (event) => {
-    const selectedTheme = event.target.value;
-    applyTheme(selectedTheme);
-    localStorage.setItem('colorScheme', selectedTheme); // Save preference
+    const selectedColorScheme = event.target.value; // Get the selected theme
+    setColorScheme(selectedColorScheme); // Apply and save the theme
   });
   
