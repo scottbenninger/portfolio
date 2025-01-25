@@ -44,7 +44,7 @@ const pages = [
   // Add the theme switcher dropdown to the page
 document.body.insertAdjacentHTML(
     'afterbegin',
-    
+    `
     <label class="color-scheme">
       Theme:
       <select id="theme-switcher">
@@ -53,7 +53,7 @@ document.body.insertAdjacentHTML(
         <option value="dark">Dark</option>
       </select>
     </label>
-    
+    `
   );
   
   const select = document.querySelector('#theme-switcher');
@@ -64,4 +64,7 @@ document.body.insertAdjacentHTML(
     document.documentElement.style.setProperty('color-scheme', savedScheme);
     select.value = savedScheme; // Update the dropdown to reflect the saved value
   }
+  
+
+
   
