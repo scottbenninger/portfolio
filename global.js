@@ -55,25 +55,21 @@ document.body.insertAdjacentHTML(
     `
   );
   
-  // Reference to the theme switcher dropdown
   const themeSwitcher = document.querySelector('#theme-switcher');
   
-  // Function to set the color scheme
   function setColorScheme(colorScheme) {
-    document.documentElement.style.setProperty('color-scheme', colorScheme); // Apply theme
-    localStorage.colorScheme = colorScheme; // Save theme to localStorage
+    document.documentElement.style.setProperty('color-scheme', colorScheme);
+    localStorage.colorScheme = colorScheme;
   }
   
-  // Load the saved theme from localStorage when the page loads
   if ('colorScheme' in localStorage) {
-    const savedColorScheme = localStorage.colorScheme; // Retrieve saved theme
-    setColorScheme(savedColorScheme); // Apply saved theme
-    themeSwitcher.value = savedColorScheme; // Update dropdown to match saved theme
+    const savedColorScheme = localStorage.colorScheme; 
+    setColorScheme(savedColorScheme); 
+    themeSwitcher.value = savedColorScheme; 
   }
   
-  // Add event listener to the dropdown to save and apply the selected theme
   themeSwitcher.addEventListener('input', (event) => {
-    const selectedColorScheme = event.target.value; // Get the selected theme
-    setColorScheme(selectedColorScheme); // Apply and save the theme
+    const selectedColorScheme = event.target.value; 
+    setColorScheme(selectedColorScheme); 
   });
   
