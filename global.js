@@ -56,19 +56,27 @@ document.body.insertAdjacentHTML(
   );
   
   // Reference the theme switcher dropdown
-  const select = document.querySelector('#theme-switcher');
+  const themeSwitcher = document.querySelector('#theme-switcher');
   
-  // Check if a color scheme is saved in localStorage and apply it
-  if ("colorScheme" in localStorage) {
-    const savedScheme = localStorage.colorScheme;
-    document.documentElement.style.setProperty('color-scheme', savedScheme); // Apply the saved theme
-    select.value = savedScheme; // Update the dropdown to reflect the saved value
+  // Function to apply the theme
+  function applyTheme(theme) {
+    document.documentElement.style.setProperty('color-scheme', theme);
   }
   
-  // Add an event listener to save the user's preference when it changes
-  select.addEventListener('input', (event) => {
-    const colorScheme = event.target.value;
-    document.documentElement.style.setProperty('color-scheme', colorScheme); // Apply the selected theme
-    localStorage.colorScheme = colorScheme; // Save the preference
+  // Load the saved theme from localStorage and apply it
+  if (localStorage.getItem('colorScheme')) {
+    const savedTheme = localStorage.getItem('colorScheme');
+    applyTheme(savedTheme);
+    themeSwitcher.value = savedTheme; // Update dropdown to match saved theme
+  } else {
+    // Default to automatic if no theme is saved
+    applyTheme('light dark');
+  }
+  
+  // Save and apply theme whenever user changes it
+  themeSwitcher.addEventListener('input', (event) => {
+    const selectedTheme = event.target.value;
+    applyTheme(selectedTheme);
+    localStorage.setItem('colorScheme', selectedTheme); // Save preference
   });
   
