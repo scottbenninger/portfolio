@@ -4,13 +4,11 @@ function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
 }
 
+// Navigation links logic
 const navLinks = $$("nav a");
-console.log(navLinks);
-
 let currentLink = navLinks.find(
   (a) => a.host === location.host && a.pathname === location.pathname
 );
-console.log(currentLink);
 
 currentLink?.classList.add("current");
 
@@ -66,7 +64,7 @@ function setTheme(scheme) {
   localStorage.colorScheme = scheme; // Save the preference
 }
 
-// Apply saved theme immediately on page load
+// Apply the saved theme immediately on page load
 if ("colorScheme" in localStorage) {
   const savedScheme = localStorage.colorScheme;
   setTheme(savedScheme); // Apply the saved theme
@@ -77,5 +75,6 @@ if ("colorScheme" in localStorage) {
 
 // Update the theme when the user changes it
 select.addEventListener('input', (event) => {
-  setTheme(event.target.value);
+  const newScheme = event.target.value;
+  setTheme(newScheme);
 });
