@@ -99,27 +99,28 @@ async function fetchJSON(url) {
 
 // Function to render projects dynamically
 function renderProjects(project, containerElement, headingLevel = 'h2') {
-    if (!containerElement) {
-        console.error("Invalid container element!");
-        return;
-    }
+  if (!containerElement) {
+      console.error("Invalid container element!");
+      return;
+  }
 
-    containerElement.innerHTML = ''; // Clears the container
+  console.log(`Rendering project: ${project.title}`); // Debugging log
 
-    // Validate heading level (only allow h1-h6)
-    const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-    const headingTag = validHeadings.includes(headingLevel) ? headingLevel : 'h2';
+  // Validate heading level (only allow h1-h6)
+  const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+  const headingTag = validHeadings.includes(headingLevel) ? headingLevel : 'h2';
 
-    const article = document.createElement('article'); // Creates new project container
+  const article = document.createElement('article'); // Creates new project container
 
-    article.innerHTML = `
-        <${headingTag}>${project.title || "Untitled Project"}</${headingTag}>
-        <img src="${project.image || "https://via.placeholder.com/150"}" alt="${project.title || "Project Image"}">
-        <p>${project.description || "No description available."}</p>
-    `;
+  article.innerHTML = `
+      <${headingTag}>${project.title || "Untitled Project"}</${headingTag}>
+      <img src="${project.image || "https://via.placeholder.com/150"}" alt="${project.title || "Project Image"}">
+      <p>${project.description || "No description available."}</p>
+  `;
 
-    containerElement.appendChild(article); // Adds project to the page
+  containerElement.appendChild(article); // Append project without clearing others
 }
+
 
 // Load projects dynamically when on the Projects page
 async function loadProjects() {
