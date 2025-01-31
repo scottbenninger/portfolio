@@ -56,34 +56,39 @@ document.body.insertAdjacentHTML(
     `
   );
   
-  const themeSwitcher = document.querySelector('#theme-switcher');
-  
-  function setColorScheme(colorScheme) {
-    document.documentElement.style.setProperty('color-scheme', colorScheme);
-    localStorage.colorScheme = colorScheme;
-  }
-  
-  if ('colorScheme' in localStorage) {
-    const savedColorScheme = localStorage.colorScheme; 
-    setColorScheme(savedColorScheme); 
-    themeSwitcher.value = savedColorScheme; 
-  }
-  
-  themeSwitcher.addEventListener('input', (event) => {
-    const selectedColorScheme = event.target.value; 
-    setColorScheme(selectedColorScheme); 
-  });
-  
-  async function fetchJSON(url) {
+const themeSwitcher = document.querySelector('#theme-switcher');
+
+function setColorScheme(colorScheme) {
+  document.documentElement.style.setProperty('color-scheme', colorScheme);
+  localStorage.colorScheme = colorScheme;
+}
+
+if ('colorScheme' in localStorage) {
+  const savedColorScheme = localStorage.colorScheme; 
+  setColorScheme(savedColorScheme); 
+  themeSwitcher.value = savedColorScheme; 
+}
+
+themeSwitcher.addEventListener('input', (event) => {
+  const selectedColorScheme = event.target.value; 
+  setColorScheme(selectedColorScheme); 
+});
+
+// ======= FETCH AND RENDER PROJECTS ======= //
+
+async function fetchJSON(url) {
     try {
         console.log(`Fetching JSON from: ${url}`);
 
+        // Fetch the JSON file
         const response = await fetch(url);
 
+        // Check if the fetch was successful
         if (!response.ok) {
             throw new Error(`Failed to fetch projects: ${response.statusText}`);
         }
 
+        // Parse and return the JSON data
         const data = await response.json();
         console.log('Parsed JSON data:', data);
         return data;
@@ -92,28 +97,56 @@ document.body.insertAdjacentHTML(
     }
 }
 
-async function loadProjects() {
-    const projectsContainer = document.querySelector('.projects'); 
+// Function to render projects dynamically
+function renderProjects(project, containerElement, headingLevel = 'h2') {
+    if (!containerElement) {
+        console.error("Invalid container element!");
+        return;
+    }
 
-    if (!projectsContainer) return; 
+    containerElement.innerHTML = ''; // Clears the container
+
+    // Validate heading level (only allow h1-h6)
+    const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+    const headingTag = validHeadings.includes(headingLevel) ? headingLevel : 'h2';
+
+    const article = document.createElement('article'); // Creates new project container
+
+    article.innerHTML = `
+        <${headingTag}>${project.title || "Untitled Project"}</${headingTag}>
+        <img src="${project.image || "https://via.placeholder.com/150"}" alt="${project.title || "Project Image"}">
+        <p>${project.description || "No description available."}</p>
+    `;
+
+    containerElement.appendChild(article); // Adds project to the page
+}
+
+// Load projects dynamically when on the Projects page
+async function loadProjects() {
+    const projectsContainer = document.querySelector('.projects'); // Get projects section
+
+    if (!projectsContainer) {
+        console.error("No .projects container found in the document!");
+        return;
+    }
+
+    console.log("Projects container found:", projectsContainer); // Debugging log
 
     const projects = await fetchJSON('lib/projects.json');
 
-    if (!projects) return; 
+    if (!projects) {
+        console.error("No projects found in JSON data!");
+        return;
+    }
 
-    projectsContainer.innerHTML = '';
+    console.log("Rendering projects..."); // Debugging log
 
     projects.forEach((project) => {
-        const article = document.createElement('article');
-
-        article.innerHTML = `
-            <h2>${project.title}</h2>
-            <img src="${project.image}" alt="${project.title}">
-            <p>${project.description}</p>
-        `;
-
-        projectsContainer.appendChild(article);
+        renderProjects(project, projectsContainer); // Call function to render each project
     });
+
+    console.log("Projects added to the page!"); // Debugging log
 }
 
+// Run loadProjects() only when on the Projects page
 document.addEventListener('DOMContentLoaded', loadProjects);
