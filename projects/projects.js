@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     console.log("Fetching project data...");
-    
-    const projects = await fetchJSON('../lib/projects.json');
+
+    const projects = await fetchJSON('../projects/lib/projects.json');
 
     if (!projects || projects.length === 0) {
         console.warn("No projects found. Displaying placeholder message.");
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     console.log("Rendering projects...");
-    
+
     projects.forEach((project) => {
         renderProjects(project, projectsContainer, 'h2');
     });
