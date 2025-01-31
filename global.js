@@ -1,6 +1,3 @@
-export async function fetchJSON(url) { ... }
-export function renderProjects(project, containerElement, headingLevel = 'h2') { ... }
-
 console.log('IT’S ALIVE!');
 
 function $$(selector, context = document) {
