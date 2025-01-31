@@ -74,79 +74,42 @@ themeSwitcher.addEventListener('input', (event) => {
   setColorScheme(selectedColorScheme); 
 });
 
-// ======= FETCH AND RENDER PROJECTS ======= //
+// PROJECTS//
+export async function fetchJSON(url) {
+  try {
+    console.log(`Fetching: ${url}`); 
+    const response = await fetch(url);
 
-async function fetchJSON(url) {
-    try {
-        console.log(`Fetching JSON from: ${url}`);
-
-        // Fetch the JSON file
-        const response = await fetch(url);
-
-        // Check if the fetch was successful
-        if (!response.ok) {
-            throw new Error(`Failed to fetch projects: ${response.statusText}`);
-        }
-
-        // Parse and return the JSON data
-        const data = await response.json();
-        console.log('Parsed JSON data:', data);
-        return data;
-    } catch (error) {
-        console.error('Error fetching or parsing JSON data:', error);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
     }
+
+    const data = await response.json();
+    console.log("Fetched Data:", data);
+    return data;
+
+
+  } catch (error) {
+    console.error('Error fetching or parsing JSON data:', error);
+  }
 }
 
-// Function to render projects dynamically
-function renderProjects(project, containerElement, headingLevel = 'h2') {
+export function renderProjects(projects, containerElement,  headingLevel = 'h2') {
   if (!containerElement) {
-      console.error("Invalid container element!");
+      console.error("Container element not found.");
       return;
   }
 
-  console.log(`Rendering project: ${project.title}`); // Debugging log
-
-  // Validate heading level (only allow h1-h6)
-  const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-  const headingTag = validHeadings.includes(headingLevel) ? headingLevel : 'h2';
-
-  const article = document.createElement('article'); // Creates new project container
-
-  article.innerHTML = `
-      <${headingTag}>${project.title || "Untitled Project"}</${headingTag}>
-      <img src="${project.image || "https://via.placeholder.com/150"}" alt="${project.title || "Project Image"}">
-      <p>${project.description || "No description available."}</p>
-  `;
-
-  containerElement.appendChild(article); // Append project without clearing others
-}
-
-// Load projects dynamically when on the Projects page
-async function loadProjects() {
-    const projectsContainer = document.querySelector('.projects'); // Get projects section
-
-    if (!projectsContainer) {
-        console.error("No .projects container found in the document!");
-        return;
+  const validHeadings = ["h1", "h2", "h3", "h4", "h5", "h6"];
+    if (!validHeadings.includes(headingLevel)) {
+        console.warn(`Invalid heading level "${headingLevel}". Defaulting to h2.`);
+        headingLevel = "h2";
     }
 
-    console.log("Projects container found:", projectsContainer); // Debugging log
+  containerElement.innerHTML = ''; // Clear existing content
 
-    const projects = await fetchJSON('lib/projects.json');
-
-    if (!projects) {
-        console.error("No projects found in JSON data!");
-        return;
-    }
-
-    console.log("Rendering projects..."); // Debugging log
-
-    projects.forEach((project) => {
-        renderProjects(project, projectsContainer); // Call function to render each project
-    });
-
-    console.log("Projects added to the page!"); // Debugging log
+  if (!projects || projects.length === 0) {
+    containerElement.innerHTML = '<p>No projects found.</p>';
+    return;
 }
-
-// Run loadProjects() only when on the Projects page
-document.addEventListener('DOMContentLoaded', loadProjects);
+}
