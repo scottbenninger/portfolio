@@ -43,34 +43,41 @@ for (let p of pages) {
 
 // Add the theme switcher dropdown to the page
 document.body.insertAdjacentHTML(
-    'afterbegin',
-    `
-      <label class="color-scheme">
-        Theme:
-        <select id="theme-switcher">
-          <option value="light dark">Automatic</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-        </select>
-      </label>
-    `
-  );
-  
-  const themeSwitcher = document.querySelector('#theme-switcher');
-  
-  function setColorScheme(colorScheme) {
-    document.documentElement.style.setProperty('color-scheme', colorScheme);
-    localStorage.colorScheme = colorScheme;
-  }
-  
-  if ('colorScheme' in localStorage) {
-    const savedColorScheme = localStorage.colorScheme; 
-    setColorScheme(savedColorScheme); 
-    themeSwitcher.value = savedColorScheme; 
-  }
-  
-  themeSwitcher.addEventListener('input', (event) => {
-    const selectedColorScheme = event.target.value; 
-    setColorScheme(selectedColorScheme); 
-  });
-  
+  'afterbegin',
+  `
+    <label class="color-scheme">
+      Theme:
+      <select id="theme-switcher">
+        <option value="light dark">Automatic</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </label>
+  `
+);
+
+const themeSwitcher = document.querySelector('#theme-switcher');
+
+// Function to apply the color scheme
+function setColorScheme(colorScheme) {
+  document.documentElement.style.setProperty('color-scheme', colorScheme);
+  localStorage.colorScheme = colorScheme;
+}
+
+// Check for saved color scheme in localStorage or set default
+if ('colorScheme' in localStorage) {
+  const savedColorScheme = localStorage.colorScheme;
+  setColorScheme(savedColorScheme);
+  themeSwitcher.value = savedColorScheme;
+} else {
+  // If no theme is stored, check system preference and set accordingly
+  const systemPreferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  setColorScheme(systemPreferred);
+  themeSwitcher.value = systemPreferred;
+}
+
+// Switch theme on user selection
+themeSwitcher.addEventListener('input', (event) => {
+  const selectedColorScheme = event.target.value;
+  setColorScheme(selectedColorScheme);
+});
