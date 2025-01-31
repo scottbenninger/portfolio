@@ -81,3 +81,45 @@ themeSwitcher.addEventListener('input', (event) => {
   const selectedColorScheme = event.target.value;
   setColorScheme(selectedColorScheme);
 });
+
+
+
+
+
+
+// projects
+
+// Function to fetch and display projects from projects.json
+fetch('lib/projects.json')
+  .then(response => response.json())
+  .then(projects => {
+    const projectsContainer = document.querySelector('.projects');
+
+    // Loop through the projects and create HTML for each one
+    projects.forEach(project => {
+      const article = document.createElement('article');
+
+      // Create and append the title
+      const h2 = document.createElement('h2');
+      h2.textContent = project.title;
+      article.appendChild(h2);
+
+      // Create and append the image
+      const img = document.createElement('img');
+      img.src = project.image;
+      img.alt = project.title;
+      article.appendChild(img);
+
+      // Create and append the description
+      const p = document.createElement('p');
+      p.textContent = project.description;
+      article.appendChild(p);
+
+      // Append the article to the projects container
+      projectsContainer.appendChild(article);
+    });
+  })
+  .catch(error => {
+    console.error('Error loading projects data:', error);
+  });
+
