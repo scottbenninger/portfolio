@@ -121,32 +121,31 @@ function renderProjects(project, containerElement, headingLevel = 'h2') {
     containerElement.appendChild(article); // Adds project to the page
 }
 
-// Load projects dynamically when on the Projects page
 async function loadProjects() {
-    const projectsContainer = document.querySelector('.projects'); // Get projects section
+  const projectsContainer = document.querySelector('.projects'); // Get projects section
 
-    if (!projectsContainer) {
-        console.error("No .projects container found in the document!");
-        return;
-    }
+  if (!projectsContainer) {
+      console.error("No .projects container found in the document!");
+      return;
+  }
 
-    console.log("Projects container found:", projectsContainer); // Debugging log
+  console.log("Projects container found:", projectsContainer); // Debugging log
 
-    const projects = await fetchJSON('lib/projects.json');
+  const projects = await fetchJSON('lib/projects.json');
 
-    if (!projects) {
-        console.error("No projects found in JSON data!");
-        return;
-    }
+  if (!projects) {
+      console.error("No projects found in JSON data!");
+      return;
+  }
 
-    console.log("Rendering projects..."); // Debugging log
+  console.log("Rendering projects..."); // Debugging log
 
-    projects.forEach((project) => {
-        renderProjects(project, projectsContainer); // Call function to render each project
-    });
+  // Clear the container ONCE before looping
+  projectsContainer.innerHTML = '';
 
-    console.log("Projects added to the page!"); // Debugging log
+  projects.forEach((project) => {
+      renderProjects(project, projectsContainer); // Call function to render each project
+  });
+
+  console.log("Projects added to the page!"); // Debugging log
 }
-
-// Run loadProjects() only when on the Projects page
-document.addEventListener('DOMContentLoaded', loadProjects);
