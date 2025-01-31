@@ -134,16 +134,27 @@ button:hover {
   font-size: 1.5em;
   line-height: 1.1;
   text-wrap: balance;
-  color: rgb(0, 0, 0); 
+  color: rgb(0, 0, 0);
 }
 
 .projects p {
   margin: 0.5em 0 0;
   font-size: 1em;
-  color: rgb(0, 0, 0); 
+  color: rgb(0, 0, 0);
 }
 
+/* CV Page Styling */
+section {
+  background-color: canvas;
+  color: canvastext;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 1.5em;
+  margin-bottom: 2em;
+  border: 1px solid var(--border-color);
+}
 
+/* Headings */
 h1, h2, h3 {
   font-weight: bold;
   margin-bottom: 0.5em;
@@ -152,18 +163,11 @@ h1, h2, h3 {
   padding-bottom: 0.2em;
 }
 
-section {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1.5em;
-  margin-bottom: 2em;
-}
-
 header {
   margin-bottom: 1em;
 }
 
+/* Text and List Styling */
 p, ul, li {
   margin-bottom: 0.8em;
 }
@@ -181,6 +185,7 @@ time {
   color: #666;
 }
 
+/* Links */
 a {
   color: var(--color-accent);
   text-decoration: none;
@@ -188,6 +193,22 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Improve Readability in Dark Mode */
+@media (prefers-color-scheme: dark) {
+  section {
+    background-color: oklch(20% 10% 250);
+    color: oklch(90% 5% 250);
+  }
+
+  a {
+    color: oklch(75% 80% 50);
+  }
+
+  time, p strong {
+    color: oklch(80% 20% 200);
+  }
 }
 
 /* Dark mode switch styling */
