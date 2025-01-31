@@ -56,60 +56,21 @@ document.body.insertAdjacentHTML(
     `
   );
   
-const themeSwitcher = document.querySelector('#theme-switcher');
-
-function setColorScheme(colorScheme) {
-  document.documentElement.style.setProperty('color-scheme', colorScheme);
-  localStorage.colorScheme = colorScheme;
-}
-
-if ('colorScheme' in localStorage) {
-  const savedColorScheme = localStorage.colorScheme; 
-  setColorScheme(savedColorScheme); 
-  themeSwitcher.value = savedColorScheme; 
-}
-
-themeSwitcher.addEventListener('input', (event) => {
-  const selectedColorScheme = event.target.value; 
-  setColorScheme(selectedColorScheme); 
-});
-
-// PROJECTS//
-export async function fetchJSON(url) {
-  try {
-    console.log(`Fetching: ${url}`); 
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log("Fetched Data:", data);
-    return data;
-
-
-  } catch (error) {
-    console.error('Error fetching or parsing JSON data:', error);
+  const themeSwitcher = document.querySelector('#theme-switcher');
+  
+  function setColorScheme(colorScheme) {
+    document.documentElement.style.setProperty('color-scheme', colorScheme);
+    localStorage.colorScheme = colorScheme;
   }
-}
-
-export function renderProjects(projects, containerElement,  headingLevel = 'h2') {
-  if (!containerElement) {
-      console.error("Container element not found.");
-      return;
+  
+  if ('colorScheme' in localStorage) {
+    const savedColorScheme = localStorage.colorScheme; 
+    setColorScheme(savedColorScheme); 
+    themeSwitcher.value = savedColorScheme; 
   }
-
-  const validHeadings = ["h1", "h2", "h3", "h4", "h5", "h6"];
-    if (!validHeadings.includes(headingLevel)) {
-        console.warn(`Invalid heading level "${headingLevel}". Defaulting to h2.`);
-        headingLevel = "h2";
-    }
-
-  containerElement.innerHTML = ''; // Clear existing content
-
-  if (!projects || projects.length === 0) {
-    containerElement.innerHTML = '<p>No projects found.</p>';
-    return;
-}
-}
+  
+  themeSwitcher.addEventListener('input', (event) => {
+    const selectedColorScheme = event.target.value; 
+    setColorScheme(selectedColorScheme); 
+  });
+  
