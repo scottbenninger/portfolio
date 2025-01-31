@@ -74,3 +74,46 @@ document.body.insertAdjacentHTML(
     setColorScheme(selectedColorScheme); 
   });
   
+  async function fetchJSON(url) {
+    try {
+        console.log(`Fetching JSON from: ${url}`);
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch projects: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log('Parsed JSON data:', data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching or parsing JSON data:', error);
+    }
+}
+
+async function loadProjects() {
+    const projectsContainer = document.querySelector('.projects'); 
+
+    if (!projectsContainer) return; 
+
+    const projects = await fetchJSON('lib/projects.json');
+
+    if (!projects) return; 
+
+    projectsContainer.innerHTML = '';
+
+    projects.forEach((project) => {
+        const article = document.createElement('article');
+
+        article.innerHTML = `
+            <h2>${project.title}</h2>
+            <img src="${project.image}" alt="${project.title}">
+            <p>${project.description}</p>
+        `;
+
+        projectsContainer.appendChild(article);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadProjects);
