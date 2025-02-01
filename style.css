@@ -264,6 +264,11 @@ a:hover {
   color: rgb(0, 0, 0);
 }
 
+/* Add styling to ensure the "year" text is the same color as other project text */
+.projects p strong {
+  color: inherit; /* Inherit the color from the parent (same as description text) */
+}
+
 /* Project count styling */
 .projects-title {
   font-size: 1.8em;
@@ -276,7 +281,7 @@ a:hover {
   color: var(--color-accent); /* Accent color for the count */
 }
 
-/* GitHub stats styling */
+
 /* GitHub stats styling */
 #profile-stats {
   margin-top: 2em;
