@@ -1,63 +1,62 @@
 [
-    {
-      "title": "Project 1",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut."
-    },
-    {
-      "title": "Project 2",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Proin non odio at enim consectetur tincidunt. Aenean ultricies."
-    },
-    {
-      "title": "Project 3",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Fusce eleifend massa ac dui cursus, non auctor sapien euismod."
-    },
-    {
-      "title": "Project 4",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Curabitur in ligula ut lorem fermentum dictum ac eget lacus."
-    },
-    {
-      "title": "Project 5",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Aliquam eget mauris sed magna cursus congue nec non magna."
-    },
-    {
-      "title": "Project 6",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Donec faucibus velit eu nibh posuere, quis tincidunt justo."
-    },
-    {
-      "title": "Project 7",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Etiam vel risus eget lectus fermentum pellentesque ut ac elit."
-    },
-    {
-      "title": "Project 8",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Nam et lorem eget nunc elementum vehicula vitae quis sapien."
-    },
-    {
-      "title": "Project 9",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Suspendisse potenti. Aenean at eros nec velit bibendum vehicula."
-    },
-    {
-      "title": "Project 10",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Praesent eget quam sed magna tempus porttitor non nec lacus."
-    },
-    {
-      "title": "Project 11",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Quisque sit amet magna auctor, pretium lectus in, faucibus ligula."
-    },
-    {
-      "title": "Project 12",
-      "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-      "description": "Ut id turpis ut sapien auctor aliquam a at metus."
-    }
-  ]
-  
+  {
+    "title": "Project 1",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut."
+  },
+  {
+    "title": "Project 2",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Proin non odio at enim consectetur tincidunt. Aenean ultricies."
+  },
+  {
+    "title": "Project 3",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Fusce eleifend massa ac dui cursus, non auctor sapien euismod."
+  },
+  {
+    "title": "Project 4",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Curabitur in ligula ut lorem fermentum dictum ac eget lacus."
+  },
+  {
+    "title": "Project 5",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Aliquam eget mauris sed magna cursus congue nec non magna."
+  },
+  {
+    "title": "Project 6",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Donec faucibus velit eu nibh posuere, quis tincidunt justo."
+  },
+  {
+    "title": "Project 7",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Etiam vel risus eget lectus fermentum pellentesque ut ac elit."
+  },
+  {
+    "title": "Project 8",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Nam et lorem eget nunc elementum vehicula vitae quis sapien."
+  },
+  {
+    "title": "Project 9",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Suspendisse potenti. Aenean at eros nec velit bibendum vehicula."
+  },
+  {
+    "title": "Project 10",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Praesent eget quam sed magna tempus porttitor non nec lacus."
+  },
+  {
+    "title": "Project 11",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Quisque sit amet magna auctor, pretium lectus in, faucibus ligula."
+  },
+  {
+    "title": "Project 12",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Ut id turpis ut sapien auctor aliquam a at metus."
+  }
+]
