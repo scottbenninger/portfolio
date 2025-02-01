@@ -224,3 +224,79 @@ a:hover {
   font: inherit;
   margin-left: 0.5rem;
 }
+
+/* Projects page styling */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); /* Responsive grid */
+  gap: 1em;
+  color: black; /* Ensures all text is black */
+  padding: 1em; /* Added some padding around the grid */
+}
+
+.projects article {
+  display: grid;
+  grid-template-rows: auto;
+  grid-row: span 3;
+  border: 1px solid var(--border-color);
+  padding: 1em;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for emphasis */
+}
+
+.projects img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px; /* Rounded corners for images */
+}
+
+.projects h2 {
+  margin: 0;
+  font-size: 1.5em;
+  line-height: 1.1;
+  color: rgb(0, 0, 0);
+}
+
+.projects p {
+  margin: 0.5em 0 0;
+  font-size: 1em;
+  color: rgb(0, 0, 0);
+}
+
+/* Project count styling */
+.projects-title {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+#project-count {
+  font-weight: normal;
+  color: var(--color-accent); /* Accent color for the count */
+}
+
+/* GitHub stats styling */
+#profile-stats {
+  margin-top: 2em;
+  background-color: #f4f4f9;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#profile-stats dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns for terms and definitions */
+  gap: 0.5em;
+  font-size: 1.1em;
+}
+
+#profile-stats dt {
+  font-weight: bold;
+}
+
+#profile-stats dd {
+  margin: 0;
+  color: var(--color-accent); /* Use accent color for the values */
+}
