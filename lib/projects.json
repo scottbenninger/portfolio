@@ -1,61 +1,73 @@
 [
   {
     "title": "Project 1",
+    "year": "2025",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut."
   },
   {
     "title": "Project 2",
+    "year": "2025",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Proin non odio at enim consectetur tincidunt. Aenean ultricies."
   },
   {
     "title": "Project 3",
+    "year": "2025",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Fusce eleifend massa ac dui cursus, non auctor sapien euismod."
   },
   {
     "title": "Project 4",
+    "year": "2024",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Curabitur in ligula ut lorem fermentum dictum ac eget lacus."
   },
   {
     "title": "Project 5",
+    "year": "2023",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Aliquam eget mauris sed magna cursus congue nec non magna."
   },
   {
     "title": "Project 6",
+    "year": "2022",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Donec faucibus velit eu nibh posuere, quis tincidunt justo."
   },
   {
     "title": "Project 7",
+    "year": "2021",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Etiam vel risus eget lectus fermentum pellentesque ut ac elit."
   },
   {
     "title": "Project 8",
+    "year": "2020",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Nam et lorem eget nunc elementum vehicula vitae quis sapien."
   },
   {
     "title": "Project 9",
+    "year": "2019",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Suspendisse potenti. Aenean at eros nec velit bibendum vehicula."
   },
   {
     "title": "Project 10",
+    "year": "2018",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Praesent eget quam sed magna tempus porttitor non nec lacus."
   },
   {
     "title": "Project 11",
+    "year": "2017",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Quisque sit amet magna auctor, pretium lectus in, faucibus ligula."
   },
   {
     "title": "Project 12",
+    "year": "2016",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
     "description": "Ut id turpis ut sapien auctor aliquam a at metus."
   }
