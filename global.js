@@ -87,3 +87,42 @@ document.body.insertAdjacentHTML(
         console.error("Error fetching or parsing JSON data:", error);
     }
   }
+
+  export function renderProjects(projects, containerElement, headingLevel = 'h2') {
+    if (!containerElement ||!(containerElement instanceof HTMLElement)) {
+        console.error("Invalid container element provided");
+        return;
+    }
+  
+    // Clear existing content to prevent duplication
+    containerElement.innerHTML = '';
+  
+    // Loop through each project and create an article element
+    projects.forEach(project => {
+        const article = document.createElement('article');
+  
+        // Validate project data to handle missing values
+        const title = project.title || "Untitled Project";
+        const image = project.image || "https://via.placeholder.com/200"; // Placeholder if no image
+        const description = project.description || "No description available.";
+  
+        // Ensure headingLevel is a valid heading tag
+        const validHeadingLevels = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+        const headingTag = validHeadingLevels.includes(headingLevel) ? headingLevel : 'h2';
+  
+        // Populate article with dynamic content
+        article.innerHTML = `
+            <${headingTag}>${title}</${headingTag}>
+            <img src="${image}" alt="${title}" style="width:200px; height:auto;">
+            <p>${description}</p>
+        `;
+  
+        // Append the article to the container
+        containerElement.appendChild(article);
+    });
+  }
+
+  
+
+
+
