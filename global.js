@@ -74,54 +74,16 @@ document.body.insertAdjacentHTML(
   });
   
 
-  // Function to fetch JSON from a URL
-export async function fetchJSON(url) {
-  try {
-    console.log(`Fetching JSON from: ${url}`);
-
-    // Fetch the JSON file
-    const response = await fetch(url);
-
-    // Check if the fetch was successful
-    if (!response.ok) {
-      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+  export async function fetchJSON(url) {
+    try {
+        const response = await fetch(url);
+  
+        if (!response.ok) {
+            throw new Error(`Failed to fetch projects: ${response.statusText}`);
+        }
+  
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching or parsing JSON data:", error);
     }
-
-    // Parse and return the JSON data
-    const data = await response.json();
-    console.log('Parsed JSON data:', data);
-    return data;
-  } catch (error) {
-    console.error('Error fetching or parsing JSON data:', error);
   }
-}
-
-// Function to render projects on the Projects page
-async function loadProjects() {
-  const projectsContainer = document.querySelector('.projects'); // The div where projects go
-
-  if (!projectsContainer) return; // Exit if not on the Projects page
-
-  const projects = await fetchJSON('lib/projects.json');
-
-  if (!projects) return; // Exit if fetch failed
-
-  // Clear the container before adding projects
-  projectsContainer.innerHTML = '';
-
-  // Loop through projects and add them to the page
-  projects.forEach((project) => {
-    const article = document.createElement('article');
-
-    article.innerHTML = `
-        <h2>${project.title}</h2>
-        <img src="${project.image}" alt="${project.title}">
-        <p>${project.description}</p>
-    `;
-
-    projectsContainer.appendChild(article);
-  });
-}
-
-// Run loadProjects() only when on the Projects page
-document.addEventListener('DOMContentLoaded', loadProjects);
