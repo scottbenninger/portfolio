@@ -277,26 +277,73 @@ a:hover {
 }
 
 /* GitHub stats styling */
+/* GitHub stats styling */
 #profile-stats {
   margin-top: 2em;
-  background-color: #f4f4f9;
-  padding: 1em;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background for cleaner look */
+  padding: 2em;
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow for emphasis */
+  border: 1px solid #ddd; /* Light border to define the section */
+}
+
+#profile-stats h2 {
+  font-size: 1.6em;
+  margin-bottom: 1em;
+  color: var(--color-accent); /* Accent color for the title */
 }
 
 #profile-stats dl {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two columns for terms and definitions */
-  gap: 0.5em;
-  font-size: 1.1em;
+  gap: 1.2em; /* Increased gap for better spacing */
+  font-size: 1.2em;
+  text-align: left; /* Align text to the left for better readability */
 }
 
 #profile-stats dt {
-  font-weight: bold;
+  font-weight: 600;
+  color: #333; /* Darker color for the terms */
+  font-size: 1.1em;
 }
 
 #profile-stats dd {
   margin: 0;
-  color: var(--color-accent); /* Use accent color for the values */
+  color: #555; /* Slightly lighter color for values */
+  font-weight: 500;
 }
+
+#profile-stats dl dt,
+#profile-stats dl dd {
+  display: flex;
+  justify-content: space-between;
+}
+
+#profile-stats dl dt {
+  font-size: 1.2em;
+  color: var(--color-accent);
+}
+
+#profile-stats dl dd {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+#profile-stats .github-link {
+  display: inline-block;
+  margin-top: 1.2em;
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--color-accent);
+  padding: 0.4em 1em;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#profile-stats .github-link:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
