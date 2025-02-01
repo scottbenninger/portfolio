@@ -26,10 +26,9 @@ async function loadLatestProjects() {
 }
 
 async function loadGitHubStats() {
-    const githubUsername = "efastovsky"; // Replace with your GitHub username
+    const githubUsername = "scottbenninger";
     const githubData = await fetchGitHubData(githubUsername);
 
-    // Select the container for displaying GitHub stats
     const profileStats = document.querySelector('#profile-stats');
 
     if (profileStats && githubData) {
