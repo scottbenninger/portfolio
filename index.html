@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" class="home">
 <head>
+    <script type="module" src="./global.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scott Benninger</title>
+    <title>Ethan Fastovsky: Personal site and portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="../global.js"></script>
 </head>
 <body>
+    
     <h1>Scott Benninger</h1>
-    <p>Hi, I am a fourth year economics and data science student at UC San Diego with a passion for analyzing data and exploring financial trends. Welcome to my portfolio!</p>
-    <img src="images/image1.png" alt="A professional photo of me" width="300">
+    <img src="images/image1.png" alt="Scott Benninger Profile Photo" style="width:200px; height:auto; border-radius:50%;">
+    <p>4th Year Economics and Data Science Student at UC San Diego</p>
+    <section>
+        <div id="profile-stats" class="stats-container">
+            <!-- GitHub stats will be dynamically loaded here -->
+        </div>
+    </section>
+    
+    <section>
+        <h2>My Recent Projects</h2>
+        <div class="projects"></div>
+    </section>
+    <script src="index.js" type="module"></script>
+    
 </body>
 </html>

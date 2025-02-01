@@ -123,6 +123,13 @@ document.body.insertAdjacentHTML(
     });
   }
 
+  export async function fetchGitHubData(username) {
+    try {
+        return await fetchJSON(`https://api.github.com/users/${username}`);
+    } catch (error) {
+        console.error("Error fetching GitHub data:", error);
+    }
+  }
   
 
 

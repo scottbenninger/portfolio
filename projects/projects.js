@@ -2,7 +2,7 @@ import { fetchJSON, renderProjects } from '../global.js';
 
 async function loadProjects() {
     try {
-        const projects = await fetchJSON('./lib/projects.json'); // Adjust based on location
+        const projects = await fetchJSON('../lib/projects.json');
 
         if (!projects || !Array.isArray(projects)) {
             throw new Error("Invalid projects.json format or file not found.");

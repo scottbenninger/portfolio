@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="module" src="../global.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scott Benninger: Projects</title>
+    <title>Scott Benninger - Projects</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <h1>Projects</h1>
+    <h1 class="projects-title"><span id="project-count">0</span> Projects</h1>
+    <p>This is my project page.</p>
 
     <div class="projects">
-        <!-- The projects will be dynamically inserted here by JavaScript -->
+        <script src="../global.js" type="module"></script>
+        <script src="projects.js" type="module"></script>
     </div>
 
-    <!-- Importing global.js and projects.js -->
-    <script src="../global.js" type="module"></script>
-    <script src="projects.js" type="module"></script>
+    <script type="module" src="./projects.js"></script>
 </body>
 </html>
