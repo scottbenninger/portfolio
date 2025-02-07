@@ -67,6 +67,8 @@ d3.select('svg')
   
   // Define a color scale using D3
   let colors = d3.scaleOrdinal(d3.schemeTableau10);
+
+  let legend = d3.select('.legend');
   
   // Append each slice as a separate path element in the SVG
   arcs.forEach((arc, idx) => {
