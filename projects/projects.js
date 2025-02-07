@@ -3,7 +3,7 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 async function loadProjects() {
     try {
-        const projects = await fetchJSON('../lib/projects.json');
+        window.allProjects = await fetchJSON('../lib/projects.json'); 
 
         if (!projects || !Array.isArray(projects)) {
             throw new Error("Invalid projects.json format or file not found.");
@@ -15,7 +15,7 @@ async function loadProjects() {
 
         // If projects exist, render them
         if (projectsContainer && projects.length > 0) {
-            renderProjects(projects, projectsContainer, 'h2');
+            updateVisualization(); // Call function to filter & update visualization
             projectCountElement.textContent = projects.length; // Update project count
         } else {
             projectsContainer.innerHTML = "<p>No projects available at the moment.</p>";
@@ -84,4 +84,13 @@ data.forEach((d, idx) => {
         .attr('style', `--color:${colors(idx)}`)
         .attr('class', 'legend-item')
         .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+});
+
+let query = '';
+
+let searchInput = document.querySelector('.searchBar');
+
+searchInput.addEventListener('input', (event) => {
+    query = event.target.value.toLowerCase();
+    updateVisualization();
 });
