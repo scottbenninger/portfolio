@@ -21,23 +21,6 @@ async function loadProjects() {
             projectsContainer.innerHTML = "<p>No projects available at the moment.</p>";
             projectCountElement.textContent = 0;
         }
-
-        // ✅ Step 3: Convert project data into a format for the pie chart
-        let rolledData = d3.rollups(
-            projects,
-            (v) => v.length, // Count projects per year
-            (d) => d.year // Group by year
-        );
-
-        // Convert into the expected pie chart format
-        let data = rolledData.map(([year, count]) => ({
-            value: count,
-            label: year
-        }));
-
-        // Call function to render the pie chart with real data
-        renderPieChart(data);
-
     } catch (error) {
         console.error("Error loading projects:", error);
         document.querySelector('.projects').innerHTML = "<p>Failed to load projects.</p>";
@@ -46,40 +29,52 @@ async function loadProjects() {
 
 loadProjects();
 
-// 🎯 Function to Render Pie Chart with Data
-function renderPieChart(data) {
-    let svg = d3.select("#projects-plot")
-        .attr("width", 450)
-        .attr("height", 450)
-        .append("g")
-        .attr("transform", "translate(225,225)"); // Center pie chart
+// Create an arc generator
+let arcGenerator = d3.arc()
+  .innerRadius(0)
+  .outerRadius(100); // Increased size for better visibility
 
-    let arcGenerator = d3.arc()
-        .innerRadius(0)
-        .outerRadius(200); // Increased pie chart size
+// Define data for the pie chart with labels
+let data = [
+  { value: 1, label: 'apples' },
+  { value: 2, label: 'oranges' },
+  { value: 3, label: 'mangos' },
+  { value: 4, label: 'pears' },
+  { value: 5, label: 'limes' },
+  { value: 5, label: 'cherries' },
+];
 
-    let sliceGenerator = d3.pie().value((d) => d.value);
-    let arcData = sliceGenerator(data);
+// Define a pie slice generator that extracts values
+let sliceGenerator = d3.pie().value((d) => d.value);
 
-    let colors = d3.scaleOrdinal(d3.schemeTableau10);
+// Generate the start and end angles for the pie slices
+let arcData = sliceGenerator(data);
 
-    // Append each slice as a separate path element in the SVG
-    svg.selectAll('path')
-        .data(arcData)
-        .enter()
-        .append('path')
-        .attr('d', arcGenerator)
-        .attr('fill', (d, idx) => colors(idx))
-        .attr('stroke', '#fff') // Adds white border
-        .attr('stroke-width', 2);
+// Define a color scale using D3
+let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-    // Render legend
-    let legend = d3.select('.legend').html(""); // Clear previous legend
+// Select the SVG and properly size and center it
+let svg = d3.select("#projects-plot")
+  .attr("viewBox", "-150 -150 300 300") // Ensures proper centering
+  .append("g");
 
-    data.forEach((d, idx) => {
-        legend.append('li')
-            .attr('style', `--color:${colors(idx)}`)
-            .attr('class', 'legend-item')
-            .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
-    });
-}
+// Append each slice as a separate path element in the SVG
+svg.selectAll('path')
+  .data(arcData)
+  .enter()
+  .append('path')
+  .attr('d', arcGenerator)
+  .attr('fill', (d, idx) => colors(idx))
+  .attr('stroke', '#fff') // Adds a white stroke for better slice separation
+  .attr('stroke-width', 2);
+
+// Select the legend container
+let legend = d3.select('.legend');
+
+// Append each legend item dynamically
+data.forEach((d, idx) => {
+    legend.append('li')
+        .attr('style', `--color:${colors(idx)}`)
+        .attr('class', 'legend-item')
+        .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+});
