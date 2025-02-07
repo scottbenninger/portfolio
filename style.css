@@ -382,26 +382,23 @@ a:hover {
 
 .container {
   display: flex;
-  align-items: center; /* Align legend and pie chart */
-  justify-content: center; /* Centers them */
-  gap: 2em;
+  align-items: center; /* Aligns items vertically */
+  justify-content: center; /* Centers content horizontally */
+  gap: 2em; /* Space between pie chart and legend */
+  flex-wrap: nowrap; /* Prevents legend from moving below */
 }
 
 svg {
-  flex-shrink: 0; /* Ensures SVG does not shrink */
-  width: 300px; /* Explicit width */
-  height: 300px; /* Explicit height */
-}
-
-
-svg {
-  flex-shrink: 0; /* Prevents the SVG from shrinking */
+  flex-shrink: 0; /* Prevents SVG from shrinking */
+  width: 300px; /* Ensures fixed size */
+  height: 300px;
 }
 
 .legend {
-  flex: 1; /* Allows the legend to take the remaining space */
+  flex: 1; /* Makes legend take remaining space */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr)); /* Adjusts layout dynamically */
+  grid-template-columns: repeat(2, minmax(9em, 1fr)); /* Forces multi-column layout */
   gap: 0.5em;
 }
+
 
