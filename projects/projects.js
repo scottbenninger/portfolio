@@ -32,7 +32,7 @@ loadProjects();
 // Create an arc generator
 let arcGenerator = d3.arc()
   .innerRadius(0)
-  .outerRadius(50);
+  .outerRadius(100); // Increased size for better visibility
 
 // Define data for the pie chart with labels
 let data = [
@@ -53,13 +53,10 @@ let arcData = sliceGenerator(data);
 // Define a color scale using D3
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-let svg = d3.select("#projects-plot") // Ensure we select the correct SVG
-  .attr("width", 300)
-  .attr("height", 300)
-  .append("g")
-  .attr("transform", "translate(150,150)"); // Center pie chart
-
-
+// Select the SVG and properly size and center it
+let svg = d3.select("#projects-plot")
+  .attr("viewBox", "-150 -150 300 300") // Ensures proper centering
+  .append("g");
 
 // Append each slice as a separate path element in the SVG
 svg.selectAll('path')
@@ -67,7 +64,9 @@ svg.selectAll('path')
   .enter()
   .append('path')
   .attr('d', arcGenerator)
-  .attr('fill', (d, idx) => colors(idx));
+  .attr('fill', (d, idx) => colors(idx))
+  .attr('stroke', '#fff') // Adds a white stroke for better slice separation
+  .attr('stroke-width', 2);
 
 // Select the legend container
 let legend = d3.select('.legend');
