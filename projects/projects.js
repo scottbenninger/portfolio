@@ -72,16 +72,8 @@ d3.select('svg')
   
   // Append each slice as a separate path element in the SVG
   arcs.forEach((arc, idx) => {
-    d3.select('svg')
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', colors(idx)); // Use the color scale function
-
-    // Append legend items dynamically
-    d3.select('.legend')
-      .append('li')
-      .attr('style', `--color:${colors(idx)}`)
-      .attr('class', 'legend-item')
-      .html(`<span class="swatch"></span> ${arc.data.label} <em>(${arc.data.value})</em>`);
-});
-
+      d3.select('svg')
+        .append('path')
+        .attr('d', arc)
+        .attr('fill', colors(idx)); // Use the color scale function
+  });
