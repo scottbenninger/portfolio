@@ -53,12 +53,12 @@ let arcData = sliceGenerator(data);
 // Define a color scale using D3
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-// Select the SVG and center the pie chart
-let svg = d3.select('svg')
-  .attr("width", 300)  // Increase width
-  .attr("height", 300) // Increase height
+let svg = d3.select("#projects-plot") // Ensure we select the correct SVG
+  .attr("width", 300)
+  .attr("height", 300)
   .append("g")
   .attr("transform", "translate(150,150)"); // Center pie chart
+
 
 
 // Append each slice as a separate path element in the SVG
