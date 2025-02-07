@@ -352,17 +352,32 @@ a:hover {
   color: #fff;
 }
 
+.container {
+  display: flex;
+  align-items: center; /* Aligns pie chart and legend on the same vertical line */
+  justify-content: flex-start; /* Keeps legend to the right */
+  gap: 3em; /* Space between pie chart and legend */
+  flex-wrap: nowrap; /* Prevents legend from moving below */
+  max-width: 100%; /* Ensures responsiveness */
+}
+
+svg {
+  flex-shrink: 0; /* Prevents the SVG from shrinking */
+  width: 450px; /* Increased pie chart size */
+  height: 450px;
+}
+
 .legend {
+  flex: 1; /* Ensures legend takes remaining space and moves to the right */
   display: grid;
   grid-template-columns: repeat(2, minmax(10em, 1fr)); /* Two-column layout */
   gap: 1em;
-  margin-top: 0; /* Remove extra margin to align with pie chart */
   padding: 1em;
   border: 1px solid #ccc;
   background: #f9f9f9;
   border-radius: 8px;
   color: black; /* Ensure text is visible */
-  max-width: 500px; /* Increase max-width to ensure better alignment */
+  max-width: 400px; /* Ensures proper positioning */
 }
 
 .legend-item {
@@ -375,26 +390,8 @@ a:hover {
 
 .legend-item .swatch {
   display: inline-block;
-  width: 1.2em; /* Slightly increase swatch size */
+  width: 1.2em; /* Increase swatch size */
   height: 1.2em;
   border-radius: 50%;
   background-color: var(--color);
-}
-
-.container {
-  display: flex;
-  align-items: center; /* Align pie chart and legend on the same vertical line */
-  justify-content: flex-start; /* Ensure the legend stays to the right */
-  gap: 3em; /* Increase gap for better spacing */
-  flex-wrap: nowrap; /* Prevents legend from moving below */
-}
-
-svg {
-  flex-shrink: 0; /* Prevents the SVG from shrinking */
-  width: 450px; /* Increase pie chart size */
-  height: 450px;
-}
-
-.legend {
-  flex: 1; /* Ensures legend takes remaining space and moves to the right */
 }
