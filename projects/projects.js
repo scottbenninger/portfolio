@@ -34,46 +34,48 @@ let arcGenerator = d3.arc()
   .innerRadius(0)
   .outerRadius(50);
 
-// Generate the arc path for a full circle
-let arc = arcGenerator({
-  startAngle: 0,
-  endAngle: 2 * Math.PI,
-});
+// Define data for the pie chart with labels
+let data = [
+  { value: 1, label: 'apples' },
+  { value: 2, label: 'oranges' },
+  { value: 3, label: 'mangos' },
+  { value: 4, label: 'pears' },
+  { value: 5, label: 'limes' },
+  { value: 5, label: 'cherries' },
+];
 
-// Append the arc as a path inside the existing SVG
-d3.select('svg')
+// Define a pie slice generator that extracts values
+let sliceGenerator = d3.pie().value((d) => d.value);
+
+// Generate the start and end angles for the pie slices
+let arcData = sliceGenerator(data);
+
+// Define a color scale using D3
+let colors = d3.scaleOrdinal(d3.schemeTableau10);
+
+// Select the SVG and center the pie chart
+let svg = d3.select('svg')
+  .attr("width", 300)  // Increase width
+  .attr("height", 300) // Increase height
+  .append("g")
+  .attr("transform", "translate(150,150)"); // Center pie chart
+
+
+// Append each slice as a separate path element in the SVG
+svg.selectAll('path')
+  .data(arcData)
+  .enter()
   .append('path')
-  .attr('d', arc)
-  .attr('fill', 'red');
+  .attr('d', arcGenerator)
+  .attr('fill', (d, idx) => colors(idx));
 
-  let data = [
-    { value: 1, label: 'apples' },
-    { value: 2, label: 'oranges' },
-    { value: 3, label: 'mangos' },
-    { value: 4, label: 'pears' },
-    { value: 5, label: 'limes' },
-    { value: 5, label: 'cherries' },
-  ];
-  
+// Select the legend container
+let legend = d3.select('.legend');
 
-  // Define a pie slice generator
-  let sliceGenerator = d3.pie().value((d) => d.value);
-  
-  // Generate the start and end angles for the pie slices
-  let arcData = sliceGenerator(data);
-  
-  // Convert each slice into an SVG path
-  let arcs = arcData.map((d) => arcGenerator(d));
-  
-  // Define a color scale using D3
-  let colors = d3.scaleOrdinal(d3.schemeTableau10);
-
-  let legend = d3.select('.legend');
-  
-  // Append each slice as a separate path element in the SVG
-  arcs.forEach((arc, idx) => {
-      d3.select('svg')
-        .append('path')
-        .attr('d', arc)
-        .attr('fill', colors(idx)); // Use the color scale function
-  });
+// Append each legend item dynamically
+data.forEach((d, idx) => {
+    legend.append('li')
+        .attr('style', `--color:${colors(idx)}`)
+        .attr('class', 'legend-item')
+        .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+});

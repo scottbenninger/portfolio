@@ -354,13 +354,14 @@ a:hover {
 
 .legend {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
   gap: 1em;
   margin-top: 1em;
   padding: 0.5em;
   border: 1px solid #ccc;
   background: #f9f9f9;
   border-radius: 8px;
+  color: black; /* Ensure text is visible */
 }
 
 .legend-item {
@@ -368,6 +369,7 @@ a:hover {
   align-items: center;
   gap: 0.5em;
   font-size: 1em;
+  color: black; /* Ensure legend text is readable */
 }
 
 .legend-item .swatch {
