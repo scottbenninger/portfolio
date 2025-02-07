@@ -47,7 +47,7 @@ d3.select('svg')
   .attr('fill', 'red');
 
   // Define data for the pie chart (two slices: 33% and 66%)
-let data = [1, 2];
+let data = [1, 2, 3, 4, 5, 5];
 
 // Define a pie slice generator
 let sliceGenerator = d3.pie();
@@ -58,13 +58,13 @@ let arcData = sliceGenerator(data);
 // Convert each slice into an SVG path
 let arcs = arcData.map((d) => arcGenerator(d));
 
-// Define colors for the slices
-let colors = ['gold', 'purple'];
+let colors = d3.scaleOrdinal(d3.schemeTableau10);
+
 
 // Append each slice as a separate path element in the SVG
 arcs.forEach((arc, idx) => {
     d3.select('svg')
       .append('path')
       .attr('d', arc)
-      .attr('fill', colors[idx]); // Assign a color to each slice
+      .attr('fill', (d, idx) => colors(idx));
 });
