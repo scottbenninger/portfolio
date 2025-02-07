@@ -1,4 +1,5 @@
 import { fetchJSON, renderProjects } from '../global.js';
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 async function loadProjects() {
     try {
@@ -27,3 +28,20 @@ async function loadProjects() {
 }
 
 loadProjects();
+
+// Create an arc generator
+let arcGenerator = d3.arc()
+  .innerRadius(0)
+  .outerRadius(50);
+
+// Generate the arc path for a full circle
+let arc = arcGenerator({
+  startAngle: 0,
+  endAngle: 2 * Math.PI,
+});
+
+// Append the arc as a path inside the existing SVG
+d3.select('svg')
+  .append('path')
+  .attr('d', arc)
+  .attr('fill', 'red');
