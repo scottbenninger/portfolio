@@ -355,10 +355,10 @@ a:hover {
 /* Main container for pie chart and legend */
 .container {
   display: flex;
-  align-items: center; /* Aligns pie chart and legend vertically */
+  align-items: center; /* Aligns pie chart and legend */
   justify-content: flex-start; /* Keeps legend to the right */
   gap: 3em; /* Space between pie chart and legend */
-  flex-wrap: wrap; /* Ensures wrapping when needed */
+  flex-wrap: nowrap; /* Prevents full wrapping */
   max-width: 100%; /* Ensures responsiveness */
 }
 
@@ -371,16 +371,16 @@ svg {
 
 /* Legend Styling */
 .legend {
-  flex: 1; /* Ensures legend takes remaining space, pushing it to the right */
+  flex: 1; /* Ensures legend takes remaining space */
   display: grid;
-  grid-template-columns: repeat(2, minmax(10em, 1fr)); /* Two-column layout */
+  grid-template-columns: repeat(auto-fit, minmax(9em, 1fr)); /* Adapts layout */
   gap: 1em;
   padding: 1em;
   border: 1px solid #ccc;
   background: #f9f9f9;
   border-radius: 8px;
   color: black; /* Ensure text is visible */
-  max-width: 300px; /* Ensures proper positioning */
+  max-width: 350px; /* Prevents legend from being too wide */
 }
 
 /* Individual Legend Items */
@@ -395,17 +395,24 @@ svg {
 /* Color Swatch Inside Legend */
 .legend-item .swatch {
   display: inline-block;
-  width: 1.2em; /* Slightly increase swatch size */
+  width: 1.2em;
   height: 1.2em;
   border-radius: 50%;
   background-color: var(--color);
 }
 
-/* 🌍 Responsive Fix: Wrap Pie Chart and Legend on Small Screens */
-@media (max-width: 768px) {
+/* 🌍 Responsive Fix: Stack Legend Items Vertically When Space is Tight */
+@media (max-width: 900px) {
+  .legend {
+    grid-template-columns: 1fr; /* Forces legend items to stack vertically */
+    max-width: 250px; /* Ensures a clean vertical layout */
+  }
+}
+
+@media (max-width: 600px) {
   .container {
-    flex-direction: column; /* Stack pie chart and legend vertically */
-    align-items: center; /* Center align for smaller screens */
+    flex-direction: column; /* Keeps pie chart on top, legend below */
+    align-items: center;
   }
 
   svg {
