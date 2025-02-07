@@ -379,3 +379,23 @@ a:hover {
   border-radius: 50%;
   background-color: var(--color);
 }
+
+.container {
+  display: flex;
+  align-items: center; /* Aligns legend and chart vertically */
+  gap: 1.5em; /* Adds spacing between the pie chart and legend */
+  justify-content: center; /* Centers the whole container */
+  flex-wrap: wrap; /* Ensures responsiveness on smaller screens */
+}
+
+svg {
+  flex-shrink: 0; /* Prevents the SVG from shrinking */
+}
+
+.legend {
+  flex: 1; /* Allows the legend to take the remaining space */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr)); /* Adjusts layout dynamically */
+  gap: 0.5em;
+}
+
