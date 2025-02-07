@@ -382,11 +382,17 @@ a:hover {
 
 .container {
   display: flex;
-  align-items: center; /* Aligns legend and chart vertically */
-  gap: 1.5em; /* Adds spacing between the pie chart and legend */
-  justify-content: center; /* Centers the whole container */
-  flex-wrap: wrap; /* Ensures responsiveness on smaller screens */
+  align-items: center; /* Align legend and pie chart */
+  justify-content: center; /* Centers them */
+  gap: 2em;
 }
+
+svg {
+  flex-shrink: 0; /* Ensures SVG does not shrink */
+  width: 300px; /* Explicit width */
+  height: 300px; /* Explicit height */
+}
+
 
 svg {
   flex-shrink: 0; /* Prevents the SVG from shrinking */
