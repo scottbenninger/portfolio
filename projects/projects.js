@@ -29,24 +29,7 @@ async function loadProjects() {
 
 loadProjects();
 
-// Create an arc generator
-let arcGenerator = d3.arc()
-  .innerRadius(0)
-  .outerRadius(50);
-
-// Generate the arc path for a full circle
-let arc = arcGenerator({
-  startAngle: 0,
-  endAngle: 2 * Math.PI,
-});
-
-// Append the arc as a path inside the existing SVG
-d3.select('svg')
-  .append('path')
-  .attr('d', arc)
-  .attr('fill', 'red');
-
-  // Define data for the pie chart (two slices: 33% and 66%)
+// Define data for the pie chart (six slices)
 let data = [1, 2, 3, 4, 5, 5];
 
 // Define a pie slice generator
@@ -55,16 +38,25 @@ let sliceGenerator = d3.pie();
 // Generate the start and end angles for the pie slices
 let arcData = sliceGenerator(data);
 
-// Convert each slice into an SVG path
-let arcs = arcData.map((d) => arcGenerator(d));
+// Create an arc generator for each slice
+let arcGenerator = d3.arc()
+  .innerRadius(0)
+  .outerRadius(50);
 
+// Define a color scale using D3
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
+// Select the SVG and center the pie chart
+let svg = d3.select('svg')
+  .attr("width", 200)
+  .attr("height", 200)
+  .append("g")
+  .attr("transform", "translate(50,50)");
 
 // Append each slice as a separate path element in the SVG
-arcs.forEach((arc, idx) => {
-    d3.select('svg')
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', (d, idx) => colors(idx));
-});
+svg.selectAll('path')
+  .data(arcData)
+  .enter()
+  .append('path')
+  .attr('d', arcGenerator)
+  .attr('fill', (d, idx) => colors(idx));
