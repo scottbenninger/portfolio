@@ -69,11 +69,19 @@ d3.select('svg')
   let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
   let legend = d3.select('.legend');
+
+  let svg = d3.select('svg');
+
+arcs.forEach((arc, idx) => {
+    svg.append('path')
+        .attr('d', arcGenerator(arc))  // Use arcGenerator properly
+        .attr('fill', colors(idx));    // Use the color scale function
+
+    // Append legend items dynamically
+    d3.select('.legend')
+        .append('li')
+        .attr('style', `--color:${colors(idx)}`)
+        .attr('class', 'legend-item')
+        .html(`<span class="swatch"></span> ${arc.data.label} <em>(${arc.data.value})</em>`);
+});
   
-  // Append each slice as a separate path element in the SVG
-  arcs.forEach((arc, idx) => {
-      d3.select('svg')
-        .append('path')
-        .attr('d', arc)
-        .attr('fill', colors(idx)); // Use the color scale function
-  });

@@ -352,3 +352,28 @@ a:hover {
   color: #fff;
 }
 
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr)); /* Responsive grid */
+  gap: 1em;
+  margin-top: 1em;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1em;
+}
+
+.legend-item .swatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background-color: var(--color);
+}
