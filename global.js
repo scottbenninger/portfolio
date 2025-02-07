@@ -43,92 +43,85 @@ for (let p of pages) {
 
 // Add the theme switcher dropdown to the page
 document.body.insertAdjacentHTML(
-    'afterbegin',
-    `
-      <label class="color-scheme">
-        Theme:
-        <select id="theme-switcher">
-          <option value="light dark">Automatic</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-        </select>
-      </label>
-    `
-  );
-  
-  const themeSwitcher = document.querySelector('#theme-switcher');
-  
-  function setColorScheme(colorScheme) {
-    document.documentElement.style.setProperty('color-scheme', colorScheme);
-    localStorage.colorScheme = colorScheme;
-  }
-  
-  if ('colorScheme' in localStorage) {
-    const savedColorScheme = localStorage.colorScheme; 
-    setColorScheme(savedColorScheme); 
-    themeSwitcher.value = savedColorScheme; 
-  }
-  
-  themeSwitcher.addEventListener('input', (event) => {
-    const selectedColorScheme = event.target.value; 
-    setColorScheme(selectedColorScheme); 
-  });
-  
+  'afterbegin',
+  `
+    <label class="color-scheme">
+      Theme:
+      <select id="theme-switcher">
+        <option value="light dark">Automatic</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </label>
+  `
+);
 
-  export async function fetchJSON(url) {
-    try {
-        const response = await fetch(url);
+const themeSwitcher = document.querySelector('#theme-switcher');
 
-        if (!response.ok) {
-            throw new Error(`Failed to fetch projects: ${response.statusText}`);
-        }
+function setColorScheme(colorScheme) {
+  document.documentElement.style.setProperty('color-scheme', colorScheme);
+  localStorage.colorScheme = colorScheme;
+}
 
-        return await response.json();
-    } catch (error) {
-        console.error("Error fetching or parsing JSON data:", error);
+if ('colorScheme' in localStorage) {
+  const savedColorScheme = localStorage.colorScheme; 
+  setColorScheme(savedColorScheme); 
+  themeSwitcher.value = savedColorScheme; 
+}
+
+themeSwitcher.addEventListener('input', (event) => {
+  const selectedColorScheme = event.target.value; 
+  setColorScheme(selectedColorScheme); 
+});
+
+export async function fetchJSON(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
     }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching or parsing JSON data:", error);
+  }
 }
 
 export function renderProjects(projects, containerElement, headingLevel = 'h2') {
-    if (!containerElement || !(containerElement instanceof HTMLElement)) {
-        console.error("Invalid container element provided");
-        return;
-    }
+  if (!containerElement || !(containerElement instanceof HTMLElement)) {
+    console.error("Invalid container element provided");
+    return;
+  }
 
-    // Clear existing content to prevent duplication
-    containerElement.innerHTML = '';
+  containerElement.innerHTML = '';
 
-    // Loop through each project and create an article element
-    projects.forEach(project => {
-        const article = document.createElement('article');
+  projects.forEach(project => {
+    const article = document.createElement('article');
 
-        // Validate project data to handle missing values
-        const title = project.title || "Untitled Project";
-        const image = project.image || "https://via.placeholder.com/200"; // Placeholder if no image
-        const description = project.description || "No description available.";
-        const year = project.year || "Unknown Year"; // Add year to the data
+    const title = project.title || "Untitled Project";
+    const image = project.image || "https://via.placeholder.com/200"; // Placeholder if no image
+    const description = project.description || "No description available.";
+    const year = project.year || "Unknown Year"; // Ensure the year is displayed
 
-        // Ensure headingLevel is a valid heading tag
-        const validHeadingLevels = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-        const headingTag = validHeadingLevels.includes(headingLevel) ? headingLevel : 'h2';
+    const validHeadingLevels = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+    const headingTag = validHeadingLevels.includes(headingLevel) ? headingLevel : 'h2';
 
-        // Populate article with dynamic content, including the year
-        article.innerHTML = `
-            <${headingTag}>${title}</${headingTag}>
-            <img src="${image}" alt="${title}" style="width:200px; height:auto;">
-            <p>${description}</p>
-            <p><strong>Year:</strong> ${year}</p> <!-- Added year here -->
-        `;
+    article.innerHTML = `
+      <${headingTag}>${title}</${headingTag}>
+      <img src="${image}" alt="${title}" style="width:200px; height:auto;">
+      <div>
+        <p>${description}</p>
+        <p class="project-year">${year}</p> <!-- Wrapped under description -->
+      </div>
+    `;
 
-        // Append the article to the container
-        containerElement.appendChild(article);
-    });
+    containerElement.appendChild(article);
+  });
 }
 
 export async function fetchGitHubData(username) {
-    try {
-        return await fetchJSON(`https://api.github.com/users/${username}`);
-    } catch (error) {
-        console.error("Error fetching GitHub data:", error);
-    }
+  try {
+    return await fetchJSON(`https://api.github.com/users/${username}`);
+  } catch (error) {
+    console.error("Error fetching GitHub data:", error);
+  }
 }

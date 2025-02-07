@@ -26,5 +26,4 @@ async function loadProjects() {
     }
 }
 
-// Run the function when the script loads
 loadProjects();
