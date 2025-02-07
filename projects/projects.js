@@ -34,15 +34,20 @@ let arcGenerator = d3.arc()
   .innerRadius(0)
   .outerRadius(100); // Increased size for better visibility
 
-// Define data for the pie chart with labels
-let data = [
-  { value: 1, label: 'apples' },
-  { value: 2, label: 'oranges' },
-  { value: 3, label: 'mangos' },
-  { value: 4, label: 'pears' },
-  { value: 5, label: 'limes' },
-  { value: 5, label: 'cherries' },
-];
+  let rolledData = d3.rollups(
+    projects, 
+    (v) => v.length,  // Count projects per year
+    (d) => d.year      // Group by year
+);
+
+// Convert to expected format
+let data = rolledData.map(([year, count]) => ({
+    value: count,
+    label: year
+}));
+
+let projects = await fetchJSON('../lib/projects.json');
+
 
 // Define a pie slice generator that extracts values
 let sliceGenerator = d3.pie().value((d) => d.value);
@@ -69,7 +74,8 @@ svg.selectAll('path')
   .attr('stroke-width', 2);
 
 // Select the legend container
-let legend = d3.select('.legend');
+let legend = d3.select('.legend').html(""); 
+
 
 // Append each legend item dynamically
 data.forEach((d, idx) => {
