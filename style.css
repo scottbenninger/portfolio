@@ -352,23 +352,26 @@ a:hover {
   color: #fff;
 }
 
+/* Main container for pie chart and legend */
 .container {
   display: flex;
-  align-items: center; /* Aligns pie chart and legend on the same vertical line */
+  align-items: center; /* Aligns pie chart and legend vertically */
   justify-content: flex-start; /* Keeps legend to the right */
   gap: 3em; /* Space between pie chart and legend */
-  flex-wrap: nowrap; /* Prevents legend from moving below */
+  flex-wrap: wrap; /* Ensures wrapping when needed */
   max-width: 100%; /* Ensures responsiveness */
 }
 
+/* Pie Chart SVG */
 svg {
-  flex-shrink: 0; /* Prevents the SVG from shrinking */
+  flex-shrink: 0; /* Prevents the pie chart from shrinking */
   width: 450px; /* Increased pie chart size */
   height: 450px;
 }
 
+/* Legend Styling */
 .legend {
-  flex: 1; /* Ensures legend takes remaining space and moves to the right */
+  flex: 1; /* Ensures legend takes remaining space, pushing it to the right */
   display: grid;
   grid-template-columns: repeat(2, minmax(10em, 1fr)); /* Two-column layout */
   gap: 1em;
@@ -377,9 +380,10 @@ svg {
   background: #f9f9f9;
   border-radius: 8px;
   color: black; /* Ensure text is visible */
-  max-width: 400px; /* Ensures proper positioning */
+  max-width: 300px; /* Ensures proper positioning */
 }
 
+/* Individual Legend Items */
 .legend-item {
   display: flex;
   align-items: center;
@@ -388,10 +392,29 @@ svg {
   color: black; /* Ensure legend text is readable */
 }
 
+/* Color Swatch Inside Legend */
 .legend-item .swatch {
   display: inline-block;
-  width: 1.2em; /* Increase swatch size */
+  width: 1.2em; /* Slightly increase swatch size */
   height: 1.2em;
   border-radius: 50%;
   background-color: var(--color);
+}
+
+/* 🌍 Responsive Fix: Wrap Pie Chart and Legend on Small Screens */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack pie chart and legend vertically */
+    align-items: center; /* Center align for smaller screens */
+  }
+
+  svg {
+    width: 350px;
+    height: 350px;
+  }
+
+  .legend {
+    max-width: 100%;
+    text-align: center;
+  }
 }
