@@ -1,5 +1,7 @@
 import { fetchJSON, renderProjects } from '../global.js';
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
+let query = ''; // Holds search input query
+
 
 async function loadProjects() {
     try {
@@ -84,4 +86,11 @@ data.forEach((d, idx) => {
         .attr('style', `--color:${colors(idx)}`)
         .attr('class', 'legend-item')
         .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+});
+
+let searchInput = document.querySelector('.searchBar');
+
+searchInput.addEventListener('input', (event) => {
+  query = event.target.value.toLowerCase();
+  updateProjects(); // Update the pie chart dynamically
 });
