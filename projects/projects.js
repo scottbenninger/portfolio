@@ -37,7 +37,15 @@ let arcGenerator = d3.arc()
   .outerRadius(100); // Increased size for better visibility
 
 // Define data for the pie chart with labels
-let projects = await fetchJSON('../lib/projects.json');
+let allProjects = []; // ✅ Store projects globally
+
+async function loadAndStoreProjects() {
+    allProjects = await fetchJSON('../lib/projects.json'); // ✅ Fetch and store once
+    renderProjects(allProjects, document.querySelector('.projects'), 'h2'); // ✅ Initial rendering
+}
+
+loadAndStoreProjects();
+
 
 let rolledData = d3.rollups(
     projects, 
@@ -90,7 +98,17 @@ data.forEach((d, idx) => {
 
 let searchInput = document.querySelector('.searchBar');
 
-searchInput.addEventListener('input', (event) => {
-  query = event.target.value.toLowerCase();
-  updateProjects(); // Update the pie chart dynamically
-});
+searchInput.addEventListener('change', (event) => {
+    // ✅ Update query value
+    query = event.target.value.toLowerCase();
+  
+    // ✅ Filter projects based on search query
+    let filteredProjects = allProjects.filter((project) =>
+        project.title.toLowerCase().includes(query) // Case-insensitive search in titles
+    );
+  
+    // ✅ Render the filtered projects list (DOES NOT TOUCH PIE CHART)
+    let projectsContainer = document.querySelector('.projects');
+    renderProjects(filteredProjects, projectsContainer, 'h2');
+  });
+  
