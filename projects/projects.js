@@ -72,53 +72,43 @@ function renderPieChart(projectsGiven) {
     let arcGenerator = d3.arc().innerRadius(0).outerRadius(100);
     let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-    // Append pie chart slices
-    svg.selectAll('path')
+s
+// Append pie chart slices
+svg.selectAll("path")
     .data(arcData)
     .enter()
-    .append('path')
-    .attr('d', arcGenerator)
-    .attr('fill', (d, idx) => colors(idx))
-    .attr('stroke', '#fff')
-    .attr('stroke-width', 2)
-    .style('cursor', 'pointer')
-    .on('click', function (_, idx) {
+    .append("path")
+    .attr("d", arcGenerator)
+    .attr("fill", (d, idx) => colors(idx))
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 2)
+    .style("cursor", "pointer") // Indicate interactivity
+    .on("click", function (_, idx) {
         selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
-  
-        // Update pie chart
-        svg.selectAll('path')
-            .classed('selected', (_, i) => i === selectedIndex);
-  
-        // Update legend highlighting (DO NOT REMOVE COLORS)
-        legend.selectAll('li')
-            .classed('selected', (_, i) => i === selectedIndex);
-  
-        // Ensure selected slice is emphasized
-        d3.select(this).raise(); // Brings the selected slice to the front
-    });
-  
-  
 
-    // Append legend items
-    legend.selectAll('li')
+        svg.selectAll("path")
+            .attr("class", (_, i) => (i === selectedIndex ? "selected" : ""));
+    });
+
+
+
+// Append legend items
+legend.selectAll("li")
     .data(data)
     .enter()
-    .append('li')
-    .attr('style', (d, idx) => `--color:${colors(idx)}`)
-    .attr('class', 'legend-item')
+    .append("li")
+    .attr("style", (d, idx) => `--color:${colors(idx)}`)
+    .attr("class", "legend-item")
     .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
-    .style('cursor', 'pointer')
-    .on('click', function (_, idx) {
+    .style("cursor", "pointer") // Indicate interactivity
+    .on("click", function (_, idx) {
         selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
-  
-        // Update pie chart selection
-        svg.selectAll('path')
-            .classed('selected', (_, i) => i === selectedIndex);
-  
-        // Update legend selection
-        legend.selectAll('li')
-            .classed('selected', (_, i) => i === selectedIndex);
+
+        svg.selectAll("path")
+            .attr("class", (_, i) => (i === selectedIndex ? "selected" : ""));
+
+        legend.selectAll("li")
+            .attr("class", (_, i) => (i === selectedIndex ? "legend-item selected" : "legend-item"));
     });
-  
-  
+
 }

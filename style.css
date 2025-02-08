@@ -431,35 +431,22 @@ svg:has(path:hover) path:not(:hover) {
   opacity: 0.5; /* Fade out non-hovered wedges */
 }
 
-/* Smooth transition effect */
 path {
+  cursor: pointer;
   transition: fill 0.3s, opacity 0.3s;
-  cursor: pointer; /* Indicate interactivity */
 }
 
-
-
 /* Highlight selected wedge */
-.selected path {
-  stroke: black !important; /* Ensure selected pie slice is clearly highlighted */
+.selected {
+  stroke: black !important;
   stroke-width: 3px;
 }
 
+/* Highlight selected legend item */
 .legend-item.selected {
-  border: 2px solid var(--color) !important;
-  font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.1); /* Light background to indicate selection */
-}
-
-
-.selected path {
-  fill: var(--color);
-}
-
-/* Keep legend colors intact, only highlight selected item */
-.legend-item.selected {
-  font-weight: bold;
   border: 2px solid var(--color);
+  font-weight: bold;
   padding: 0.3em;
   border-radius: 5px;
 }
+
