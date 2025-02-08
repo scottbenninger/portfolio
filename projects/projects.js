@@ -81,18 +81,22 @@ function renderPieChart(projectsGiven) {
     .attr('fill', (d, idx) => colors(idx))
     .attr('stroke', '#fff')
     .attr('stroke-width', 2)
-    .style('cursor', 'pointer') // Make wedges clickable
-    .on('click', (_, idx) => {
+    .style('cursor', 'pointer')
+    .on('click', function (_, idx) {
         selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
   
-        // Update styles for the pie chart
+        // Update pie chart
         svg.selectAll('path')
             .classed('selected', (_, i) => i === selectedIndex);
   
-        // Update styles for the legend (Retains original colors)
+        // Update legend highlighting (DO NOT REMOVE COLORS)
         legend.selectAll('li')
             .classed('selected', (_, i) => i === selectedIndex);
+  
+        // Ensure selected slice is emphasized
+        d3.select(this).raise(); // Brings the selected slice to the front
     });
+  
   
 
     // Append legend items
@@ -100,20 +104,21 @@ function renderPieChart(projectsGiven) {
     .data(data)
     .enter()
     .append('li')
-    .attr('style', (d, idx) => `--color:${colors(idx)}`) // Retains original colors
+    .attr('style', (d, idx) => `--color:${colors(idx)}`)
     .attr('class', 'legend-item')
     .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
-    .style('cursor', 'pointer') // Make legend items clickable
-    .on('click', (_, idx) => {
+    .style('cursor', 'pointer')
+    .on('click', function (_, idx) {
         selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
   
-        // Update styles for the pie chart
+        // Update pie chart selection
         svg.selectAll('path')
             .classed('selected', (_, i) => i === selectedIndex);
   
-        // Update styles for the legend (Retains original colors)
+        // Update legend selection
         legend.selectAll('li')
             .classed('selected', (_, i) => i === selectedIndex);
     });
+  
   
 }
