@@ -86,10 +86,20 @@ function renderPieChart(projectsGiven) {
     .on("click", (event, d) => {
         // Toggle selection
         selectedIndex = selectedIndex === d.index ? -1 : d.index;
-        
-        // Re-render the chart and legend to apply selection
+    
+        // Re-render pie chart and legend
         renderPieChart(projectsGiven);
+    
+        // Apply project filtering based on the selected wedge
+        if (selectedIndex === -1) {
+            renderProjects(projects, document.querySelector('.projects'), 'h2');
+        } else {
+            let selectedYear = data[selectedIndex].label;
+            let filteredProjects = projects.filter(project => project.year.toString() === selectedYear);
+            renderProjects(filteredProjects, document.querySelector('.projects'), 'h2');
+        }
     });
+    
 
 
     // Append legend items
@@ -103,9 +113,18 @@ function renderPieChart(projectsGiven) {
     .on("click", (event, d) => {
         // Toggle selection
         selectedIndex = selectedIndex === d.index ? -1 : d.index;
-        
-        // Re-render the chart and legend to update selection
+    
+        // Re-render pie chart and legend
         renderPieChart(projectsGiven);
+    
+        // Apply project filtering based on the selected wedge
+        if (selectedIndex === -1) {
+            renderProjects(projects, document.querySelector('.projects'), 'h2');
+        } else {
+            let selectedYear = data[selectedIndex].label;
+            let filteredProjects = projects.filter(project => project.year.toString() === selectedYear);
+            renderProjects(filteredProjects, document.querySelector('.projects'), 'h2');
+        }
     });
-
+    
 }
