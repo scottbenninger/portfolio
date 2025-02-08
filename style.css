@@ -439,36 +439,17 @@ path {
 
 
 
-/* Highlight selected pie slice */
-.selected {
-  stroke: black !important;
+/* Highlight selected wedge */
+.selected path {
+  stroke: black !important; /* Ensure selected pie slice is clearly highlighted */
   stroke-width: 3px;
-  filter: brightness(1.2); /* Makes selection pop */
 }
 
-/* Ensure selected legend item is clearly visible */
 .legend-item.selected {
   border: 2px solid var(--color) !important;
   font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.1);
-  padding: 0.3em;
-  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1); /* Light background to indicate selection */
 }
-
-/* Prevent legend colors from disappearing */
-.legend-item {
-  background-color: var(--color); /* Retains original color */
-}
-
-/* Ensure hover and selection effects do not remove colors */
-.legend-item:hover {
-  opacity: 0.8;
-}
-
-.legend-item.selected {
-  opacity: 1 !important;
-}
-
 
 
 .selected path {
