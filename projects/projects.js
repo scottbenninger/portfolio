@@ -36,20 +36,47 @@ let arcGenerator = d3.arc()
   .innerRadius(0)
   .outerRadius(100); // Increased size for better visibility
 
-// Define data for the pie chart with labels
-let projects = await fetchJSON('../lib/projects.json');
+  async function updateProjects() {
+    let projects = await fetchJSON('../lib/projects.json');
 
-let rolledData = d3.rollups(
-    projects, 
-    (v) => v.length,  // Count projects per year
-    (d) => d.year      // Group by year
-);
+    // Filter projects based on search query
+    let filteredProjects = projects.filter((project) =>
+        project.title.toLowerCase().includes(query)
+    );
 
-// Convert to expected format
-let data = rolledData.map(([year, count]) => ({
-    value: count,
-    label: year
-}));
+    let rolledData = d3.rollups(
+        filteredProjects, 
+        (v) => v.length,
+        (d) => d.year
+    );
+
+    let data = rolledData.map(([year, count]) => ({
+        value: count,
+        label: year
+    }));
+
+    // Update Pie Chart
+    svg.selectAll("path").remove(); // ✅ Clears old slices before updating
+    let arcData = sliceGenerator(data);
+
+    svg.selectAll('path')
+        .data(arcData)
+        .enter()
+        .append('path')
+        .attr('d', arcGenerator)
+        .attr('fill', (d, idx) => colors(idx))
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 2);
+
+    // Update Legend
+    legend.html(""); // ✅ Clears previous legend before adding new items
+    data.forEach((d, idx) => {
+        legend.append('li')
+            .attr('style', `--color:${colors(idx)}`)
+            .attr('class', 'legend-item')
+            .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+    });
+}
 
 
 // Define a pie slice generator that extracts values
