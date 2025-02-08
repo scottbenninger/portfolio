@@ -449,3 +449,17 @@ path {
   padding: 0.3em;
   border-radius: 5px;
 }
+
+/* Highlight selected wedge */
+.selected {
+  stroke: black !important;
+  stroke-width: 3px;
+}
+
+/* Highlight selected legend item */
+.legend-item.selected {
+  font-weight: bold;
+  border: 2px solid var(--color);
+  padding: 0.3em;
+  border-radius: 5px;
+}
