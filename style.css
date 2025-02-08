@@ -439,3 +439,27 @@ path {
 
 
 
+/* Highlight selected wedge */
+.selected path {
+  stroke: black !important; /* Ensure selected pie slice is clearly highlighted */
+  stroke-width: 3px;
+}
+
+.legend-item.selected {
+  border: 2px solid var(--color) !important;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.1); /* Light background to indicate selection */
+}
+
+
+.selected path {
+  fill: var(--color);
+}
+
+/* Keep legend colors intact, only highlight selected item */
+.legend-item.selected {
+  font-weight: bold;
+  border: 2px solid var(--color);
+  padding: 0.3em;
+  border-radius: 5px;
+}

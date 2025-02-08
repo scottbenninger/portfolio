@@ -82,13 +82,12 @@ function renderPieChart(projectsGiven) {
     .attr('stroke', '#fff')
     .attr('stroke-width', 2)
     .style('cursor', 'pointer') // Make wedges clickable
-    .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : '')) // Highlight selected wedge
     .on('click', (_, idx) => {
         selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
   
         // Update styles for the pie chart
         svg.selectAll('path')
-            .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
+            .classed('selected', (_, i) => i === selectedIndex);
   
         // Update styles for the legend (Retains original colors)
         legend.selectAll('li')
@@ -97,11 +96,24 @@ function renderPieChart(projectsGiven) {
   
 
     // Append legend items
-    legend.selectAll("li")
-        .data(data)
-        .enter()
-        .append("li")
-        .attr("style", (d, idx) => `--color:${colors(idx)}`)
-        .attr("class", "legend-item")
-        .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+    legend.selectAll('li')
+    .data(data)
+    .enter()
+    .append('li')
+    .attr('style', (d, idx) => `--color:${colors(idx)}`) // Retains original colors
+    .attr('class', 'legend-item')
+    .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
+    .style('cursor', 'pointer') // Make legend items clickable
+    .on('click', (_, idx) => {
+        selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
+  
+        // Update styles for the pie chart
+        svg.selectAll('path')
+            .classed('selected', (_, i) => i === selectedIndex);
+  
+        // Update styles for the legend (Retains original colors)
+        legend.selectAll('li')
+            .classed('selected', (_, i) => i === selectedIndex);
+    });
+  
 }
