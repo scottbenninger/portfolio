@@ -72,24 +72,15 @@ function renderPieChart(projectsGiven) {
     let arcGenerator = d3.arc().innerRadius(0).outerRadius(100);
     let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-s
-// Append pie chart slices
-svg.selectAll("path")
-    .data(arcData)
-    .enter()
-    .append("path")
-    .attr("d", arcGenerator)
-    .attr("fill", (d, idx) => colors(idx))
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 2)
-    .style("cursor", "pointer") // Indicate interactivity
-    .on("click", function (_, idx) {
-        selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
-
-        svg.selectAll("path")
-            .attr("class", (_, i) => (i === selectedIndex ? "selected" : ""));
-    });
-
+    // Append pie chart slices
+    svg.selectAll("path")
+        .data(arcData)
+        .enter()
+        .append("path")
+        .attr("d", arcGenerator)
+        .attr("fill", (d, idx) => colors(idx))
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 2);
 
     // Append legend items
     legend.selectAll("li")
