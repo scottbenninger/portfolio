@@ -425,3 +425,14 @@ svg {
     text-align: center;
   }
 }
+
+/* Highlighting hovered wedge */
+svg:has(path:hover) path:not(:hover) {
+  opacity: 0.5; /* Fade out non-hovered wedges */
+}
+
+/* Smooth transition effect */
+path {
+  transition: opacity 300ms ease-in-out;
+}
+
