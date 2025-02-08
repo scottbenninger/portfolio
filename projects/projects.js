@@ -91,24 +91,12 @@ svg.selectAll("path")
     });
 
 
-
-// Append legend items
-legend.selectAll("li")
-    .data(data)
-    .enter()
-    .append("li")
-    .attr("style", (d, idx) => `--color:${colors(idx)}`)
-    .attr("class", "legend-item")
-    .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
-    .style("cursor", "pointer") // Indicate interactivity
-    .on("click", function (_, idx) {
-        selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
-
-        svg.selectAll("path")
-            .attr("class", (_, i) => (i === selectedIndex ? "selected" : ""));
-
-        legend.selectAll("li")
-            .attr("class", (_, i) => (i === selectedIndex ? "legend-item selected" : "legend-item"));
-    });
-
+    // Append legend items
+    legend.selectAll("li")
+        .data(data)
+        .enter()
+        .append("li")
+        .attr("style", (d, idx) => `--color:${colors(idx)}`)
+        .attr("class", "legend-item")
+        .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
 }
