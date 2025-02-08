@@ -33,14 +33,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Search bar functionality
     searchInput.addEventListener('input', (event) => {
         query = event.target.value.toLowerCase();
+    
         let filteredProjects = projects.filter((project) => {
             let values = Object.values(project).join('\n').toLowerCase();
             return values.includes(query);
         });
-
+    
+        // Apply year filter if a pie slice is selected
+        if (selectedIndex !== -1) {
+            let selectedYear = data[selectedIndex].label;
+            filteredProjects = filteredProjects.filter(project => project.year.toString() === selectedYear);
+        }
+    
         renderProjects(filteredProjects, projectsContainer, 'h2');
         renderPieChart(filteredProjects);
     });
+    
 });
 
 // Function to render pie chart and legend
@@ -90,15 +98,26 @@ function renderPieChart(projectsGiven) {
         // Re-render pie chart and legend
         renderPieChart(projectsGiven);
     
-        // Apply project filtering based on the selected wedge
-        if (selectedIndex === -1) {
-            renderProjects(projects, document.querySelector('.projects'), 'h2');
-        } else {
-            let selectedYear = data[selectedIndex].label;
-            let filteredProjects = projects.filter(project => project.year.toString() === selectedYear);
-            renderProjects(filteredProjects, document.querySelector('.projects'), 'h2');
+        // Get currently active search query
+        let filteredProjects = projects;
+    
+        if (query) {
+            filteredProjects = filteredProjects.filter(project => {
+                let values = Object.values(project).join('\n').toLowerCase();
+                return values.includes(query);
+            });
         }
+    
+        // Apply year filter if a wedge is selected
+        if (selectedIndex !== -1) {
+            let selectedYear = data[selectedIndex].label;
+            filteredProjects = filteredProjects.filter(project => project.year.toString() === selectedYear);
+        }
+    
+        // Render the final filtered projects
+        renderProjects(filteredProjects, document.querySelector('.projects'), 'h2');
     });
+    
     
 
 
