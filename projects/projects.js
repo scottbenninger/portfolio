@@ -37,7 +37,16 @@ let arcGenerator = d3.arc()
   .outerRadius(100); // Increased size for better visibility
 
 // Define data for the pie chart with labels
-let projects = await fetchJSON('../lib/projects.json');
+let allProjects = []; // Store all projects globally
+
+async function loadAndStoreProjects() {
+    allProjects = await fetchJSON('../lib/projects.json'); // Fetch once and store globally
+    updateProjects(); // Call updateProjects() to initialize the pie chart
+}
+
+loadAndStoreProjects(); // ✅ Fetch projects once instead of multiple times
+
+
 
 let rolledData = d3.rollups(
     projects, 
@@ -94,3 +103,49 @@ searchInput.addEventListener('input', (event) => {
   query = event.target.value.toLowerCase();
   updateProjects(); // Update the pie chart dynamically
 });
+
+
+
+function updateProjects() {
+    let filteredProjects = allProjects.filter((project) =>
+        project.title.toLowerCase().includes(query)
+    );
+
+    let rolledData = d3.rollups(
+        filteredProjects, 
+        (v) => v.length,
+        (d) => d.year
+    );
+
+    let data = rolledData.map(([year, count]) => ({
+        value: count,
+        label: year
+    }));
+
+    // Prevent deletion if no data is found
+    if (data.length === 0) {
+        return; // ✅ Stops the pie chart from disappearing if no results match
+    }
+
+    // Clear and Rebuild Pie Chart
+    svg.selectAll("path").remove(); 
+    let arcData = sliceGenerator(data);
+
+    svg.selectAll('path')
+        .data(arcData)
+        .enter()
+        .append('path')
+        .attr('d', arcGenerator)
+        .attr('fill', (d, idx) => colors(idx))
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 2);
+
+    // Clear and Rebuild Legend
+    legend.html(""); 
+    data.forEach((d, idx) => {
+        legend.append('li')
+            .attr('style', `--color:${colors(idx)}`) // ✅ Corrected syntax
+            .attr('class', 'legend-item')
+            .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`); // ✅ Corrected HTML formatting
+    });
+}
