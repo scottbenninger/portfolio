@@ -5,7 +5,8 @@ let query = ''; // Holds search input query
 
 async function loadProjects() {
     try {
-        const projects = await fetchJSON('../lib/projects.json');
+        projects = await fetchJSON('../lib/projects.json'); // ✅ Store globally
+
 
         if (!projects || !Array.isArray(projects)) {
             throw new Error("Invalid projects.json format or file not found.");
@@ -37,14 +38,7 @@ let arcGenerator = d3.arc()
   .outerRadius(100); // Increased size for better visibility
 
 // Define data for the pie chart with labels
-let allProjects = []; // ✅ Store projects globally
-
-async function loadAndStoreProjects() {
-    allProjects = await fetchJSON('../lib/projects.json'); // ✅ Fetch and store once
-    renderProjects(allProjects, document.querySelector('.projects'), 'h2'); // ✅ Initial rendering
-}
-
-loadAndStoreProjects();
+let projects = []; // ✅ Store projects globally for filtering
 
 
 let rolledData = d3.rollups(
@@ -98,17 +92,15 @@ data.forEach((d, idx) => {
 
 let searchInput = document.querySelector('.searchBar');
 
+
 searchInput.addEventListener('change', (event) => {
-    // ✅ Update query value
     query = event.target.value.toLowerCase();
-  
-    // ✅ Filter projects based on search query
-    let filteredProjects = allProjects.filter((project) =>
-        project.title.toLowerCase().includes(query) // Case-insensitive search in titles
+
+    // ✅ Filter projects based on search query (ONLY updates project list)
+    let filteredProjects = projects.filter((project) =>
+        project.title.toLowerCase().includes(query) // ✅ Case-insensitive search
     );
-  
-    // ✅ Render the filtered projects list (DOES NOT TOUCH PIE CHART)
+
     let projectsContainer = document.querySelector('.projects');
-    renderProjects(filteredProjects, projectsContainer, 'h2');
-  });
-  
+    renderProjects(filteredProjects, projectsContainer, 'h2'); // ✅ Only updates the project list
+});
