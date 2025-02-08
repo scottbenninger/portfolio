@@ -72,56 +72,49 @@ function renderPieChart(projectsGiven) {
     let arcGenerator = d3.arc().innerRadius(0).outerRadius(100);
     let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-    // Append pie chart slices
-    // Append pie chart slices with click functionality
-    // Append pie chart slices with correct selection behavior
-svg.selectAll("path")
-.data(arcData)
-.enter()
-.append("path")
-.attr("d", arcGenerator)
-.attr("fill", (d, idx) => colors(idx))
-.attr("stroke", "#fff")
-.attr("stroke-width", 2)
-.style("cursor", "pointer") // Indicate interactivity
-.on("click", function (event, idx) {
-    // Toggle selection
-    selectedIndex = selectedIndex === idx ? -1 : idx;
-
-    // Update Pie Chart Selection
     svg.selectAll("path")
-        .attr("class", (_, i) => i === selectedIndex ? "selected" : "");
-    
-    // Update Legend Selection
+        .data(arcData)
+        .enter()
+        .append("path")
+        .attr("d", arcGenerator)
+        .attr("fill", (d, idx) => colors(idx))
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 2)
+        .attr("class", (_, idx) => (idx === selectedIndex ? "selected" : ""))
+        .on("click", function (_, idx) {
+            selectedIndex = selectedIndex === idx ? -1 : idx;
+
+            // Update selected state for pie slices
+            svg.selectAll("path")
+                .attr("class", (_, i) => (i === selectedIndex ? "selected" : ""));
+
+            // Update selected state for legend items
+            legend.selectAll("li")
+                .attr("class", (_, i) => (i === selectedIndex ? "legend-item selected" : "legend-item"));
+
+            updateFilteredProjects(data);
+        });
+
+    // Append legend items with click event
     legend.selectAll("li")
-        .attr("class", (_, i) => i === selectedIndex ? "legend-item selected" : "legend-item");
-});
+        .data(data)
+        .enter()
+        .append("li")
+        .attr("style", (d, idx) => `--color:${colors(idx)}`)
+        .attr("class", (_, idx) => (idx === selectedIndex ? "legend-item selected" : "legend-item"))
+        .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
+        .on("click", function (_, idx) {
+            selectedIndex = selectedIndex === idx ? -1 : idx;
 
+            // Update selected state for pie slices
+            svg.selectAll("path")
+                .attr("class", (_, i) => (i === selectedIndex ? "selected" : ""));
 
+            // Update selected state for legend items
+            legend.selectAll("li")
+                .attr("class", (_, i) => (i === selectedIndex ? "legend-item selected" : "legend-item"));
 
-    // Append legend items
-    // Append legend items with click functionality
-// Append legend items with correct selection behavior
-legend.selectAll("li")
-    .data(data)
-    .enter()
-    .append("li")
-    .attr("style", (d, idx) => `--color:${colors(idx)}`)
-    .attr("class", "legend-item")
-    .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
-    .style("cursor", "pointer") // Indicate interactivity
-    .on("click", function (_, idx) {
-        // Toggle selection
-        selectedIndex = selectedIndex === idx ? -1 : idx;
-
-        // Update Pie Chart Selection
-        svg.selectAll("path")
-            .attr("class", (_, i) => i === selectedIndex ? "selected" : "");
-
-        // Update Legend Selection
-        legend.selectAll("li")
-            .attr("class", (_, i) => i === selectedIndex ? "legend-item selected" : "legend-item");
-    });
-
-
+            updateFilteredProjects(data);
+        });    
 }
+
