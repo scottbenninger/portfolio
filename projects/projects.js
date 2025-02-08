@@ -74,31 +74,34 @@ function renderPieChart(projectsGiven) {
 
     // Append pie chart slices
     // Append pie chart slices with click functionality
-    svg.selectAll("path")
-    .data(arcData)
-    .enter()
-    .append("path")
-    .attr("d", arcGenerator)
-    .attr("fill", (d, idx) => colors(idx))
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 2)
-    .style("cursor", "pointer") // Indicate interactivity
-    .on("click", function (_, idx) {
-        // Toggle selection
-        selectedIndex = selectedIndex === idx ? -1 : idx;
+    // Append pie chart slices with correct selection behavior
+svg.selectAll("path")
+.data(arcData)
+.enter()
+.append("path")
+.attr("d", arcGenerator)
+.attr("fill", (d, idx) => colors(idx))
+.attr("stroke", "#fff")
+.attr("stroke-width", 2)
+.style("cursor", "pointer") // Indicate interactivity
+.on("click", function (event, idx) {
+    // Toggle selection
+    selectedIndex = selectedIndex === idx ? -1 : idx;
 
-        // Update Pie Chart Selection
-        svg.selectAll("path")
-            .classed("selected", (_, i) => i === selectedIndex);
-        
-        // Update Legend Selection
-        legend.selectAll("li")
-            .classed("selected", (_, i) => i === selectedIndex);
-    });
+    // Update Pie Chart Selection
+    svg.selectAll("path")
+        .attr("class", (_, i) => i === selectedIndex ? "selected" : "");
+    
+    // Update Legend Selection
+    legend.selectAll("li")
+        .attr("class", (_, i) => i === selectedIndex ? "legend-item selected" : "legend-item");
+});
+
 
 
     // Append legend items
     // Append legend items with click functionality
+// Append legend items with correct selection behavior
 legend.selectAll("li")
     .data(data)
     .enter()
@@ -113,11 +116,12 @@ legend.selectAll("li")
 
         // Update Pie Chart Selection
         svg.selectAll("path")
-            .classed("selected", (_, i) => i === selectedIndex);
-        
+            .attr("class", (_, i) => i === selectedIndex ? "selected" : "");
+
         // Update Legend Selection
         legend.selectAll("li")
-            .classed("selected", (_, i) => i === selectedIndex);
-});
+            .attr("class", (_, i) => i === selectedIndex ? "legend-item selected" : "legend-item");
+    });
+
 
 }
