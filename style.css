@@ -439,3 +439,19 @@ path {
 
 
 
+/* Highlight selected wedge */
+.selected {
+  --color: oklch(60% 45% 0) !important; /* Custom highlight color */
+}
+
+.selected path {
+  fill: var(--color);
+}
+
+/* Keep legend colors intact, only highlight selected item */
+.legend-item.selected {
+  font-weight: bold;
+  border: 2px solid var(--color);
+  padding: 0.3em;
+  border-radius: 5px;
+}
