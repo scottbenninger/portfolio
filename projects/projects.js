@@ -5,8 +5,7 @@ let query = ''; // Holds search input query
 
 async function loadProjects() {
     try {
-        projects = await fetchJSON('../lib/projects.json'); // ✅ Store globally
-
+        const projects = await fetchJSON('../lib/projects.json');
 
         if (!projects || !Array.isArray(projects)) {
             throw new Error("Invalid projects.json format or file not found.");
@@ -38,8 +37,7 @@ let arcGenerator = d3.arc()
   .outerRadius(100); // Increased size for better visibility
 
 // Define data for the pie chart with labels
-let projects = []; // ✅ Store projects globally for filtering
-
+let projects = await fetchJSON('../lib/projects.json');
 
 let rolledData = d3.rollups(
     projects, 
@@ -90,17 +88,3 @@ data.forEach((d, idx) => {
         .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
 });
 
-let searchInput = document.querySelector('.searchBar');
-
-
-searchInput.addEventListener('change', (event) => {
-    query = event.target.value.toLowerCase();
-
-    // ✅ Filter projects based on search query (ONLY updates project list)
-    let filteredProjects = projects.filter((project) =>
-        project.title.toLowerCase().includes(query) // ✅ Case-insensitive search
-    );
-
-    let projectsContainer = document.querySelector('.projects');
-    renderProjects(filteredProjects, projectsContainer, 'h2'); // ✅ Only updates the project list
-});
