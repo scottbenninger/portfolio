@@ -5,7 +5,6 @@ let query = ''; // Stores search query
 let projects = []; // Global store for projects
 let selectedIndex = -1; // No wedge is selected initially
 
-
 document.addEventListener("DOMContentLoaded", async () => {
     // Fetch projects once and store globally
     projects = await fetchJSON('../lib/projects.json');
@@ -72,6 +71,7 @@ function renderPieChart(projectsGiven) {
     let arcGenerator = d3.arc().innerRadius(0).outerRadius(100);
     let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
+    // Append pie chart slices
     svg.selectAll("path")
         .data(arcData)
         .enter()
@@ -80,9 +80,9 @@ function renderPieChart(projectsGiven) {
         .attr("fill", (d, idx) => colors(idx))
         .attr("stroke", "#fff")
         .attr("stroke-width", 2)
-        .attr("class", (_, idx) => (idx === selectedIndex ? "selected" : ""))
-        .on("click", function (_, idx) {
-            selectedIndex = selectedIndex === idx ? -1 : idx;
+        .attr("class", (_, idx) => (idx === selectedIndex ? "selected" : "")) // Apply selection class
+        .on("click", function (_, idx) { 
+            selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
 
             // Update selected state for pie slices
             svg.selectAll("path")
@@ -91,8 +91,6 @@ function renderPieChart(projectsGiven) {
             // Update selected state for legend items
             legend.selectAll("li")
                 .attr("class", (_, i) => (i === selectedIndex ? "legend-item selected" : "legend-item"));
-
-            updateFilteredProjects(data);
         });
 
     // Append legend items with click event
@@ -103,18 +101,15 @@ function renderPieChart(projectsGiven) {
         .attr("style", (d, idx) => `--color:${colors(idx)}`)
         .attr("class", (_, idx) => (idx === selectedIndex ? "legend-item selected" : "legend-item"))
         .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
-        .on("click", function (_, idx) {
-            selectedIndex = selectedIndex === idx ? -1 : idx;
+        .on("click", function (_, idx) { 
+            selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
 
             // Update selected state for pie slices
             svg.selectAll("path")
                 .attr("class", (_, i) => (i === selectedIndex ? "selected" : ""));
-
+            
             // Update selected state for legend items
             legend.selectAll("li")
                 .attr("class", (_, i) => (i === selectedIndex ? "legend-item selected" : "legend-item"));
-
-            updateFilteredProjects(data);
-        });    
+        });
 }
-
