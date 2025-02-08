@@ -3,6 +3,8 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 let query = ''; // Stores search query
 let projects = []; // Global store for projects
+let selectedIndex = -1; // No wedge is selected initially
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     // Fetch projects once and store globally
@@ -71,21 +73,47 @@ function renderPieChart(projectsGiven) {
     let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
     // Append pie chart slices
-    svg.selectAll("path")
-        .data(arcData)
-        .enter()
-        .append("path")
-        .attr("d", arcGenerator)
-        .attr("fill", (d, idx) => colors(idx))
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 2);
+    svg.selectAll('path')
+    .data(arcData)
+    .enter()
+    .append('path')
+    .attr('d', arcGenerator)
+    .attr('fill', (d, idx) => colors(idx))
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 2)
+    .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : '')) // Highlight selected wedge
+    .style('cursor', 'pointer') // Make cursor indicate it's clickable
+    .on('click', (_, idx) => {
+        selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
+
+        // Update styles for the pie chart
+        svg.selectAll('path')
+            .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
+
+        // Update styles for the legend
+        legend.selectAll('li')
+            .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
+    });
+
 
     // Append legend items
-    legend.selectAll("li")
-        .data(data)
-        .enter()
-        .append("li")
-        .attr("style", (d, idx) => `--color:${colors(idx)}`)
-        .attr("class", "legend-item")
-        .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+    legend.selectAll('li')
+    .data(data)
+    .enter()
+    .append('li')
+    .attr('style', (d, idx) => `--color:${colors(idx)}`)
+    .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''))
+    .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
+    .style('cursor', 'pointer') // Make cursor indicate it's clickable
+    .on('click', (_, idx) => {
+        selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
+
+        // Update styles for the pie chart
+        svg.selectAll('path')
+            .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
+
+        // Update styles for the legend
+        legend.selectAll('li')
+            .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
+    });
 }

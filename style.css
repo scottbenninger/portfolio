@@ -436,3 +436,25 @@ path {
   transition: opacity 300ms ease-in-out;
 }
 
+/* Highlight selected wedge and legend */
+.selected {
+  --color: oklch(60% 45% 0) !important; /* Custom highlight color */
+}
+
+.selected path {
+  fill: var(--color);
+}
+
+/* Make wedges clickable */
+path {
+  cursor: pointer;
+}
+
+/* Improve selected legend item visibility */
+.selected {
+  font-weight: bold;
+  border: 2px solid var(--color);
+  padding: 0.3em;
+  border-radius: 5px;
+}
+
