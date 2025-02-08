@@ -433,7 +433,9 @@ svg:has(path:hover) path:not(:hover) {
 
 /* Smooth transition effect */
 path {
-  transition: opacity 300ms ease-in-out;
+  transition: fill 0.3s, opacity 0.3s;
+  cursor: pointer; /* Indicate interactivity */
 }
+
 
 
