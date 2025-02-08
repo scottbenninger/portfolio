@@ -3,7 +3,7 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
 async function loadProjects() {
     try {
-        window.allProjects = await fetchJSON('../lib/projects.json'); 
+        const projects = await fetchJSON('../lib/projects.json');
 
         if (!projects || !Array.isArray(projects)) {
             throw new Error("Invalid projects.json format or file not found.");
@@ -15,7 +15,7 @@ async function loadProjects() {
 
         // If projects exist, render them
         if (projectsContainer && projects.length > 0) {
-            updateVisualization(); // Call function to filter & update visualization
+            renderProjects(projects, projectsContainer, 'h2');
             projectCountElement.textContent = projects.length; // Update project count
         } else {
             projectsContainer.innerHTML = "<p>No projects available at the moment.</p>";
@@ -34,21 +34,15 @@ let arcGenerator = d3.arc()
   .innerRadius(0)
   .outerRadius(100); // Increased size for better visibility
 
-  let projects = await fetchJSON('../lib/projects.json');
-
-  let rolledData = d3.rollups(
-      projects, 
-      (v) => v.length,  // Count projects per year
-      (d) => d.year      // Group by year
-  );
-  
-  // Convert to expected format
-  let data = rolledData.map(([year, count]) => ({
-      value: count,
-      label: year
-  }));
-  
-  
+// Define data for the pie chart with labels
+let data = [
+  { value: 1, label: 'apples' },
+  { value: 2, label: 'oranges' },
+  { value: 3, label: 'mangos' },
+  { value: 4, label: 'pears' },
+  { value: 5, label: 'limes' },
+  { value: 5, label: 'cherries' },
+];
 
 // Define a pie slice generator that extracts values
 let sliceGenerator = d3.pie().value((d) => d.value);
@@ -75,8 +69,7 @@ svg.selectAll('path')
   .attr('stroke-width', 2);
 
 // Select the legend container
-let legend = d3.select('.legend').html(""); 
-
+let legend = d3.select('.legend');
 
 // Append each legend item dynamically
 data.forEach((d, idx) => {
@@ -84,13 +77,4 @@ data.forEach((d, idx) => {
         .attr('style', `--color:${colors(idx)}`)
         .attr('class', 'legend-item')
         .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
-});
-
-let query = '';
-
-let searchInput = document.querySelector('.searchBar');
-
-searchInput.addEventListener('input', (event) => {
-    query = event.target.value.toLowerCase();
-    updateVisualization();
 });
