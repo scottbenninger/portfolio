@@ -97,23 +97,11 @@ function renderPieChart(projectsGiven) {
 
 
     // Append legend items
-    legend.selectAll('li')
-    .data(data)
-    .enter()
-    .append('li')
-    .attr('style', (d, idx) => `--color:${colors(idx)}`)
-    .attr('class', (_, idx) => (idx === selectedIndex ? 'selected' : ''))
-    .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
-    .style('cursor', 'pointer') // Make cursor indicate it's clickable
-    .on('click', (_, idx) => {
-        selectedIndex = selectedIndex === idx ? -1 : idx; // Toggle selection
-
-        // Update styles for the pie chart
-        svg.selectAll('path')
-            .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
-
-        // Update styles for the legend
-        legend.selectAll('li')
-            .attr('class', (_, i) => (i === selectedIndex ? 'selected' : ''));
-    });
+    legend.selectAll("li")
+        .data(data)
+        .enter()
+        .append("li")
+        .attr("style", (d, idx) => `--color:${colors(idx)}`)
+        .attr("class", "legend-item")
+        .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
 }
