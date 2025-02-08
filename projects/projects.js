@@ -35,20 +35,54 @@ let arcGenerator = d3.arc()
   .outerRadius(100); // Increased size for better visibility
 
 // Define data for the pie chart with labels
-let data = [
-  { value: 1, label: 'apples' },
-  { value: 2, label: 'oranges' },
-  { value: 3, label: 'mangos' },
-  { value: 4, label: 'pears' },
-  { value: 5, label: 'limes' },
-  { value: 5, label: 'cherries' },
-];
+async function updateProjects() {
+    let projects = await fetchJSON('../lib/projects.json');
+
+    let filteredProjects = projects.filter((project) =>
+        project.title.toLowerCase().includes(query)
+    );
+
+    let rolledData = d3.rollups(
+        filteredProjects, 
+        (v) => v.length,
+        (d) => d.year
+    );
+
+    let data = rolledData.map(([year, count]) => ({
+        value: count,
+        label: year
+    }));
+
+    // Update Pie Chart
+    let arcData = sliceGenerator(data);
+    svg.selectAll('path').remove();
+
+    svg.selectAll('path')
+        .data(arcData)
+        .enter()
+        .append('path')
+        .attr('d', arcGenerator)
+        .attr('fill', (d, idx) => colors(idx))
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 2);
+
+    // Update Legend
+    legend.html("");
+    data.forEach((d, idx) => {
+        legend.append('li')
+            .attr('style', `--color:${colors(idx)}`)
+            .attr('class', 'legend-item')
+            .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+    });
+}
+
 
 // Define a pie slice generator that extracts values
 let sliceGenerator = d3.pie().value((d) => d.value);
 
 // Generate the start and end angles for the pie slices
-let arcData = sliceGenerator(data);
+updateProjects();
+
 
 // Define a color scale using D3
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
@@ -77,4 +111,13 @@ data.forEach((d, idx) => {
         .attr('style', `--color:${colors(idx)}`)
         .attr('class', 'legend-item')
         .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
+});
+
+let query = ''; // Store the search query
+
+let searchInput = document.querySelector('.searchBar');
+
+searchInput.addEventListener('input', (event) => {  // Real-time search updates
+    query = event.target.value.toLowerCase(); // Convert input to lowercase for case-insensitive matching
+    updateProjects(); // Call function to filter and re-render projects
 });
