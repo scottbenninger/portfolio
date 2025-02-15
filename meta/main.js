@@ -92,7 +92,7 @@ function createScatterplot() {
   // Define dimensions & margins
   const width = 1000;
   const height = 600;
-  const margin = { top: 20, right: 20, bottom: 50, left: 60 }; // Adjusted bottom margin
+  const margin = { top: 20, right: 20, bottom: 70, left: 70 }; // Increased bottom margin
 
   // Define usable area
   const usableArea = {
