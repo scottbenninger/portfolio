@@ -17,26 +17,21 @@ async function loadData() {
 
   console.log("CSV loaded:", data.length, "entries");
 
-  displayStats(); // Now we compute and display stats
+  displayStats(); // Compute and display stats
 }
 
 // Function to display stats
 function displayStats() {
-  // Process commits first
   processCommits();
 
-  // Select the #stats div and append a <dl> list
   const dl = d3.select('#stats').append('dl').attr('class', 'stats');
 
-  // Add total LOC
   dl.append('dt').html('Total <abbr title="Lines of Code">LOC</abbr>');
   dl.append('dd').text(data.length);
 
-  // Add total commits
   dl.append('dt').text('Total commits');
   dl.append('dd').text(commits.length);
 
-  // Compute additional statistics
   const numFiles = d3.group(data, (d) => d.file).size;
   const maxFileLength = d3.max(data, (d) => d.line);
   const avgFileLength = d3.mean(
@@ -44,15 +39,12 @@ function displayStats() {
     (d) => d[1]
   );
 
-  // Display number of files
   dl.append('dt').text('Number of files');
   dl.append('dd').text(numFiles);
 
-  // Display longest file
   dl.append('dt').text('Longest file (in lines)');
   dl.append('dd').text(maxFileLength);
 
-  // Display average file length
   dl.append('dt').text('Average file length (in lines)');
   dl.append('dd').text(Math.round(avgFileLength));
 
@@ -93,14 +85,14 @@ function processCommits() {
   console.log("Commits array processed:", commits);
 }
 
-
+// Function to create scatterplot
 function createScatterplot() {
   console.log("Creating scatterplot...");
 
   // Define dimensions & margins
   const width = 1000;
   const height = 600;
-  const margin = { top: 20, right: 20, bottom: 50, left: 60 }; // Increased bottom for X-axis labels
+  const margin = { top: 20, right: 20, bottom: 50, left: 60 }; 
 
   // Define usable area
   const usableArea = {
@@ -117,20 +109,20 @@ function createScatterplot() {
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  // **Fix X-Scale: Ensure Proper Date Range Mapping**
+  // **X-Scale: Date Range**
   const xScale = d3
     .scaleTime()
     .domain(d3.extent(commits, (d) => d.datetime))
     .range([0, usableArea.width])
     .nice();
 
-  // **Fix Y-Scale: Ensure Time is Correctly Mapped**
+  // **Y-Scale: Time of Day**
   const yScale = d3
     .scaleLinear()
     .domain([0, 24])
-    .range([usableArea.height, 0]); // Flip to match SVG coordinate system
+    .range([usableArea.height, 0]); 
 
-  // Create dots
+  // **Add Dots**
   svg.append("g")
     .attr("class", "dots")
     .selectAll("circle")
@@ -143,21 +135,21 @@ function createScatterplot() {
 
   console.log("Scatterplot created.");
 
-  // **Fix X-Axis**
-  const xAxis = d3.axisBottom(xScale);
-
-  // **Fix Y-Axis: Time Format**
-  const yAxis = d3
-    .axisLeft(yScale)
-    .tickFormat((d) => String(d % 24).padStart(2, "0") + ":00"); // Formats as HH:00
-
-  // **Add X-axis**
+  // **X-Axis**
+  const xAxis = d3.axisBottom(xScale).ticks(10).tickFormat(d3.timeFormat("%b %d")); // Format as Month-Day
   svg.append("g")
     .attr("transform", `translate(0, ${usableArea.height})`) // Position at bottom
     .call(xAxis)
-    .attr("class", "x-axis");
+    .attr("class", "x-axis")
+    .selectAll("text")
+    .style("text-anchor", "middle"); // Prevent text overlap
 
-  // **Add Y-axis**
+  // **Y-Axis: Time Format**
+  const yAxis = d3
+    .axisLeft(yScale)
+    .tickFormat((d) => String(d % 24).padStart(2, "0") + ":00"); 
+
+  // **Add Y-Axis**
   svg.append("g")
     .call(yAxis)
     .attr("class", "y-axis");
@@ -165,10 +157,8 @@ function createScatterplot() {
   console.log("Axes added to scatterplot.");
 }
 
-
 // Load data when DOM is ready
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
-  createScatterplot(); 
+  createScatterplot();
 });
-
