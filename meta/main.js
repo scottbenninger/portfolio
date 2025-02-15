@@ -208,7 +208,7 @@ function createScatterplot() {
     .join("circle")
     .attr("cx", (d) => xScale(d.datetime))
     .attr("cy", (d) => yScale(d.hourFrac))
-    .attr("r", (d) => rScale(d.totalLines)) // Set radius based on lines edited
+    .attr("r", (d) => Math.min(rScale(d.totalLines), 25)) // Hard cap at 25px radius
   .style("fill-opacity", 0.7) // Add transparency for overlapping dots
   .on("mouseenter", function (event, d) {
     d3.select(event.currentTarget).style("fill-opacity", 1); // Full opacity on hover
