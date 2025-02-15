@@ -116,8 +116,8 @@ function createScatterplot() {
   console.log("Creating scatterplot...");
 
   // Define dimensions & margins
-  const width = 500;
-  const height = 300;
+  const width = 750;
+  const height = 450;
   const margin = { top: 10, right: 10, bottom: 30, left: 50 };
 
   // Define usable area
