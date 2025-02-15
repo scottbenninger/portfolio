@@ -496,18 +496,29 @@ path {
   color: var(--stats-text, #222); /* Adjust for dark mode */
 }
 
-/* Tooltip Styling */
 dl.info {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.5em 1em;
   font-size: 14px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent for a soft effect */
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Elevation effect */
+  backdrop-filter: blur(8px); /* Frosted glass effect */
+  position: fixed; /* Needed for cursor tracking */
+  pointer-events: none; /* Prevents tooltip from interfering with mouse events */
+  transition-duration: 500ms;
+  transition-property: opacity, visibility;
 }
+
+/* Hide tooltip when not needed */
+dl.info[hidden]:not(:hover, :focus-within) {
+  opacity: 0;
+  visibility: hidden;
+}
+
 
 .tooltip {
   position: fixed;

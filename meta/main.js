@@ -85,6 +85,7 @@ function processCommits() {
   console.log("Commits array processed:", commits);
 }
 
+// Function to update tooltip content
 function updateTooltipContent(commit, event) {
   const tooltip = document.getElementById("commit-tooltip");
   const link = document.getElementById("commit-link");
@@ -94,7 +95,7 @@ function updateTooltipContent(commit, event) {
   const lines = document.getElementById("commit-lines");
 
   if (Object.keys(commit).length === 0) {
-    tooltip.classList.remove("visible");
+    updateTooltipVisibility(false);
     return;
   }
 
@@ -105,20 +106,31 @@ function updateTooltipContent(commit, event) {
   author.textContent = commit.author;
   lines.textContent = commit.totalLines;
 
-  // Position tooltip near the mouse pointer
-  tooltip.style.top = `${event.clientY + 10}px`;
-  tooltip.style.left = `${event.clientX + 10}px`;
-  tooltip.classList.add("visible");
+  updateTooltipVisibility(true);
+  updateTooltipPosition(event);
+}
+
+// Function to update tooltip visibility
+function updateTooltipVisibility(isVisible) {
+  const tooltip = document.getElementById("commit-tooltip");
+  tooltip.hidden = !isVisible;
+}
+
+// Function to position tooltip near the cursor
+function updateTooltipPosition(event) {
+  const tooltip = document.getElementById("commit-tooltip");
+  tooltip.style.left = `${event.clientX + 15}px`;
+  tooltip.style.top = `${event.clientY + 15}px`;
 }
 
 // Function to create scatterplot
 function createScatterplot() {
   console.log("Creating scatterplot...");
 
-  // Define dimensions & margins
-  const width = 750;
-  const height = 450;
-  const margin = { top: 10, right: 10, bottom: 30, left: 50 };
+  // **Doubled size**
+  const width = 1500;
+  const height = 900;
+  const margin = { top: 20, right: 20, bottom: 60, left: 80 };
 
   // Define usable area
   const usableArea = {
@@ -134,9 +146,10 @@ function createScatterplot() {
   const svg = d3
     .select("#chart")
     .append("svg")
-    .attr("width", "100%")  // Make it responsive
-    .attr("height", height)
     .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("preserveAspectRatio", "xMidYMid meet")
+    .style("width", "100%")
+    .style("height", "auto")
     .style("max-width", "none")
     .style("overflow", "visible");
 
@@ -183,17 +196,15 @@ function createScatterplot() {
     .attr("fill", (d) => (d.hourFrac < 6 || d.hourFrac > 18 ? "steelblue" : "orange"))
     .on("mouseenter", (event, commit) => {
       updateTooltipContent(commit, event);
-  })
-  .on("mousemove", (event) => {
-    const tooltip = document.getElementById("commit-tooltip");
-    tooltip.style.top = `${event.clientY + 10}px`;
-    tooltip.style.left = `${event.clientX + 10}px`;
-  })
-  .on("mouseleave", () => {
-    updateTooltipContent({});
-  });
-
-
+      updateTooltipVisibility(true);
+    })
+    .on("mousemove", (event) => {
+      updateTooltipPosition(event);
+    })
+    .on("mouseleave", () => {
+      updateTooltipContent({});
+      updateTooltipVisibility(false);
+    });
 
   console.log("Scatterplot created.");
 }
