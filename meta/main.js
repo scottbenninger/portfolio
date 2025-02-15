@@ -191,7 +191,11 @@ function createScatterplot() {
   const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
 
   // Define a square root scale for radius to ensure accurate perception
-  const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
+  const rScale = d3
+  .scaleSqrt()
+  .domain([minLines, Math.min(maxLines, 5000)]) // Cap scaling at 5000 lines
+  .range([3, 20]); // Prevent excessive size growth
+
 
   // Sort commits by total lines in descending order so larger dots are drawn first
   const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
