@@ -4,6 +4,7 @@ let commits = []; // Stores commit data
 
 // Function to load CSV data
 async function loadData() {
+  console.log("Loading CSV...");
   data = await d3.csv('loc.csv', (row) => ({
     ...row,
     line: Number(row.line),  // Convert line count to a number
@@ -13,8 +14,9 @@ async function loadData() {
     datetime: new Date(row.datetime),
   }));
 
+  console.log("CSV loaded:", data.length, "entries"); // Debugging check
+
   processCommits(); // Compute commit statistics
-  console.log(commits); // Debugging: Check processed commit data
 }
 
 // Function to process commit data
@@ -50,6 +52,9 @@ function processCommits() {
 
       return ret;
     });
+
+  window.commits = commits; // ✅ Makes commits accessible in DevTools
+  console.log("Commits array processed:", commits); // ✅ Debugging
 }
 
 // Load data when the DOM is fully loaded
