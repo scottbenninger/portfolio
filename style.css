@@ -463,3 +463,24 @@ path {
   padding: 0.3em;
   border-radius: 5px;
 }
+
+
+.stats {
+  display: grid;
+  grid-template-columns: max-content auto;
+  gap: 8px 16px;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+.stats dt {
+  font-weight: bold;
+  text-align: right;
+}
+
+.stats dd {
+  margin: 0;
+}
