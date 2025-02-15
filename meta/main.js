@@ -153,8 +153,9 @@ function createScatterplot() {
     .join("circle")
     .attr("cx", (d) => xScale(d.datetime))
     .attr("cy", (d) => yScale(d.hourFrac))
-    .attr("r", 5)
+    .attr("r", 8)  // Increase radius for better visibility
     .attr("fill", (d) => (d.hourFrac < 6 || d.hourFrac > 18 ? "steelblue" : "orange"));
+
 
   console.log("Scatterplot created.");
 }
