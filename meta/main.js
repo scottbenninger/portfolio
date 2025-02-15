@@ -108,7 +108,10 @@ function createScatterplot() {
   const svg = d3
     .select("#chart")
     .append("svg")
+    .attr("width", "100%")  // Make it responsive
+    .attr("height", height)
     .attr("viewBox", `0 0 ${width} ${height}`)
+    .style("max-width", "none")
     .style("overflow", "visible");
 
   // Define scales
