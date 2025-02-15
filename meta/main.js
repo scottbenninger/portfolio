@@ -85,6 +85,32 @@ function processCommits() {
   console.log("Commits array processed:", commits);
 }
 
+function updateTooltipContent(commit, event) {
+  const tooltip = document.getElementById("commit-tooltip");
+  const link = document.getElementById("commit-link");
+  const date = document.getElementById("commit-date");
+  const time = document.getElementById("commit-time");
+  const author = document.getElementById("commit-author");
+  const lines = document.getElementById("commit-lines");
+
+  if (Object.keys(commit).length === 0) {
+    tooltip.classList.remove("visible");
+    return;
+  }
+
+  link.href = commit.url;
+  link.textContent = commit.id;
+  date.textContent = commit.datetime?.toLocaleDateString("en", { dateStyle: "full" });
+  time.textContent = commit.datetime?.toLocaleTimeString("en", { hour: "2-digit", minute: "2-digit" });
+  author.textContent = commit.author;
+  lines.textContent = commit.totalLines;
+
+  // Position tooltip near the mouse pointer
+  tooltip.style.top = `${event.clientY + 10}px`;
+  tooltip.style.left = `${event.clientX + 10}px`;
+  tooltip.classList.add("visible");
+}
+
 // Function to create scatterplot
 function createScatterplot() {
   console.log("Creating scatterplot...");
@@ -153,8 +179,20 @@ function createScatterplot() {
     .join("circle")
     .attr("cx", (d) => xScale(d.datetime))
     .attr("cy", (d) => yScale(d.hourFrac))
-    .attr("r", 8)  // Increase radius for better visibility
-    .attr("fill", (d) => (d.hourFrac < 6 || d.hourFrac > 18 ? "steelblue" : "orange"));
+    .attr("r", 8)
+    .attr("fill", (d) => (d.hourFrac < 6 || d.hourFrac > 18 ? "steelblue" : "orange"))
+    .on("mouseenter", (event, commit) => {
+      updateTooltipContent(commit, event);
+  })
+  .on("mousemove", (event) => {
+    const tooltip = document.getElementById("commit-tooltip");
+    tooltip.style.top = `${event.clientY + 10}px`;
+    tooltip.style.left = `${event.clientX + 10}px`;
+  })
+  .on("mouseleave", () => {
+    updateTooltipContent({});
+  });
+
 
 
   console.log("Scatterplot created.");

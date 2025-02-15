@@ -495,3 +495,43 @@ path {
   margin: 0;
   color: var(--stats-text, #222); /* Adjust for dark mode */
 }
+
+/* Tooltip Styling */
+dl.info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5em 1em;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+  z-index: 1000;
+}
+
+/* Show tooltip on hover */
+.tooltip.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Hover effect for dots */
+circle {
+  transition: transform 200ms ease-in-out;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
+}
