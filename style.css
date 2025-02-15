@@ -470,17 +470,28 @@ path {
   grid-template-columns: max-content auto;
   gap: 8px 16px;
   font-family: Arial, sans-serif;
-  background: #f9f9f9;
+  background: var(--stats-bg, #f9f9f9); /* Light mode default */
+  color: var(--stats-text, #222); /* Dark text for light mode */
   padding: 16px;
   border-radius: 8px;
   max-width: 500px;
 }
 
+/* Define dark mode styling */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --stats-bg: #222; /* Darker background */
+    --stats-text: #f9f9f9; /* Light text for readability */
+  }
+}
+
 .stats dt {
   font-weight: bold;
   text-align: right;
+  color: var(--stats-text, #222); /* Adjust for dark mode */
 }
 
 .stats dd {
   margin: 0;
+  color: var(--stats-text, #222); /* Adjust for dark mode */
 }
