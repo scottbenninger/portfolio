@@ -28,7 +28,7 @@ function processCommits() {
 
       let ret = {
         id: commit,
-        url: 'https://github.com/YOUR_REPO/commit/' + commit, // Replace with your actual GitHub repo
+        url: 'https://github.com/scottbenninger/commit/' + commit, 
         author,
         date,
         time,
