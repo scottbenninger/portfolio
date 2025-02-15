@@ -100,14 +100,10 @@ function createScatterplot() {
   // Define dimensions & margins
   const width = 1000;
   const height = 600;
-  const margin = { top: 10, right: 10, bottom: 50, left: 50 }; // Increased bottom margin for X-axis labels
+  const margin = { top: 20, right: 20, bottom: 50, left: 60 }; // Increased bottom for X-axis labels
 
   // Define usable area
   const usableArea = {
-    top: margin.top,
-    right: width - margin.right,
-    bottom: height - margin.bottom,
-    left: margin.left,
     width: width - margin.left - margin.right,
     height: height - margin.top - margin.bottom,
   };
@@ -124,8 +120,8 @@ function createScatterplot() {
   // **Fix X-Scale: Ensure Proper Date Range Mapping**
   const xScale = d3
     .scaleTime()
-    .domain(d3.extent(commits, (d) => d.datetime)) // Auto-detect min/max dates
-    .range([0, usableArea.width]) // Make sure the range covers the full width
+    .domain(d3.extent(commits, (d) => d.datetime))
+    .range([0, usableArea.width])
     .nice();
 
   // **Fix Y-Scale: Ensure Time is Correctly Mapped**
@@ -140,15 +136,15 @@ function createScatterplot() {
     .selectAll("circle")
     .data(commits)
     .join("circle")
-    .attr("cx", (d) => xScale(d.datetime)) // Corrected X position
-    .attr("cy", (d) => yScale(d.hourFrac)) // Y position is fine
+    .attr("cx", (d) => xScale(d.datetime))
+    .attr("cy", (d) => yScale(d.hourFrac))
     .attr("r", 5)
     .attr("fill", "steelblue");
 
   console.log("Scatterplot created.");
 
   // **Fix X-Axis**
-  const xAxis = d3.axisBottom(xScale).ticks(6);
+  const xAxis = d3.axisBottom(xScale);
 
   // **Fix Y-Axis: Time Format**
   const yAxis = d3
@@ -158,12 +154,13 @@ function createScatterplot() {
   // **Add X-axis**
   svg.append("g")
     .attr("transform", `translate(0, ${usableArea.height})`) // Position at bottom
-    .call(xAxis);
+    .call(xAxis)
+    .attr("class", "x-axis");
 
   // **Add Y-axis**
   svg.append("g")
-    .attr("transform", `translate(0, 0)`) // Align to left
-    .call(yAxis);
+    .call(yAxis)
+    .attr("class", "y-axis");
 
   console.log("Axes added to scatterplot.");
 }
