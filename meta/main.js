@@ -97,31 +97,46 @@ function processCommits() {
 function createScatterplot() {
   console.log("Creating scatterplot...");
 
-  // Define dimensions
+  // Define dimensions & margins
   const width = 1000;
   const height = 600;
+  const margin = { top: 10, right: 10, bottom: 30, left: 50 }; // Adjust left margin for Y-axis labels
 
-  // Create SVG
+  // Define usable area (inside margins)
+  const usableArea = {
+    top: margin.top,
+    right: width - margin.right,
+    bottom: height - margin.bottom,
+    left: margin.left,
+    width: width - margin.left - margin.right,
+    height: height - margin.top - margin.bottom,
+  };
+
+  // Create SVG with proper margins
   const svg = d3
     .select("#chart")
     .append("svg")
-    .attr("viewBox", `0 0 ${width} ${height}`)
-    .style("overflow", "visible");
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
   // Define X (date) scale
   const xScale = d3
     .scaleTime()
-    .domain(d3.extent(commits, (d) => d.datetime)) // Auto-detect min/max dates
-    .range([0, width])
+    .domain(d3.extent(commits, (d) => d.datetime))
+    .range([usableArea.left, usableArea.right])
     .nice();
 
   // Define Y (time of day) scale
-  const yScale = d3.scaleLinear().domain([0, 24]).range([height, 0]);
+  const yScale = d3
+    .scaleLinear()
+    .domain([0, 24])
+    .range([usableArea.bottom, usableArea.top]);
 
   // Create dots
-  const dots = svg.append("g").attr("class", "dots");
-
-  dots
+  svg.append("g")
+    .attr("class", "dots")
     .selectAll("circle")
     .data(commits)
     .join("circle")
@@ -131,11 +146,32 @@ function createScatterplot() {
     .attr("fill", "steelblue");
 
   console.log("Scatterplot created.");
+
+  // **Step 2.2: Add Axes**
+  const xAxis = d3.axisBottom(xScale);
+  const yAxis = d3
+    .axisLeft(yScale)
+    .tickFormat((d) => String(d % 24).padStart(2, "0") + ":00"); // Format as hours
+
+  // Add X axis
+  svg
+    .append("g")
+    .attr("transform", `translate(0, ${usableArea.bottom})`)
+    .call(xAxis);
+
+  // Add Y axis
+  svg
+    .append("g")
+    .attr("transform", `translate(${usableArea.left}, 0)`)
+    .call(yAxis);
+
+  console.log("Axes added to scatterplot.");
 }
+
 
 // Load data when DOM is ready
 document.addEventListener("DOMContentLoaded", async () => {
   await loadData();
-  createScatterplot(); // ✅ Generate the scatterplot after loading commits
+  createScatterplot(); 
 });
 
