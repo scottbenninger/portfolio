@@ -85,6 +85,12 @@ function processCommits() {
   console.log("Commits array processed:", commits);
 }
 
+function updateTooltipVisibility(isVisible) {
+  const tooltip = document.getElementById("commit-tooltip");
+  tooltip.hidden = !isVisible;
+}
+
+
 function updateTooltipContent(commit, event) {
   const tooltip = document.getElementById("commit-tooltip");
   const link = document.getElementById("commit-link");
@@ -94,9 +100,11 @@ function updateTooltipContent(commit, event) {
   const lines = document.getElementById("commit-lines");
 
   if (Object.keys(commit).length === 0) {
-    tooltip.classList.remove("visible");
+    updateTooltipVisibility(false);
     return;
   }
+  updateTooltipVisibility(true);
+  
 
   link.href = commit.url;
   link.textContent = commit.id;
@@ -110,6 +118,13 @@ function updateTooltipContent(commit, event) {
   tooltip.style.left = `${event.clientX + 10}px`;
   tooltip.classList.add("visible");
 }
+
+function updateTooltipPosition(event) {
+  const tooltip = document.getElementById("commit-tooltip");
+  tooltip.style.top = `${event.clientY + 15}px`;
+  tooltip.style.left = `${event.clientX + 15}px`;
+}
+
 
 // Function to create scatterplot
 function createScatterplot() {
@@ -185,13 +200,14 @@ function createScatterplot() {
       updateTooltipContent(commit, event);
   })
   .on("mousemove", (event) => {
-    const tooltip = document.getElementById("commit-tooltip");
-    tooltip.style.top = `${event.clientY + 10}px`;
-    tooltip.style.left = `${event.clientX + 10}px`;
+    updateTooltipPosition(event);
   })
+  
   .on("mouseleave", () => {
     updateTooltipContent({});
+    updateTooltipVisibility(false);
   });
+  
 
 
 

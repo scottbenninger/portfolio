@@ -501,24 +501,22 @@ dl.info {
   grid-template-columns: auto 1fr;
   gap: 0.5em 1em;
   font-size: 14px;
-  background: rgba(255, 255, 255, 0.9); /* Semi-transparent for a soft effect */
+  background: rgba(255, 255, 255, 0.9);
   padding: 12px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Elevation effect */
-  backdrop-filter: blur(8px); /* Frosted glass effect */
-  position: fixed; /* Needed for cursor tracking */
-  pointer-events: none; /* Prevents tooltip from interfering with mouse events */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  pointer-events: none;
   transition-duration: 500ms;
   transition-property: opacity, visibility;
 }
 
-/* Hide tooltip when not needed */
 dl.info[hidden]:not(:hover, :focus-within) {
   opacity: 0;
   visibility: hidden;
 }
-
 
 .tooltip {
   position: fixed;
@@ -530,13 +528,11 @@ dl.info[hidden]:not(:hover, :focus-within) {
   z-index: 1000;
 }
 
-/* Show tooltip on hover */
 .tooltip.visible {
   visibility: visible;
   opacity: 1;
 }
 
-/* Hover effect for dots */
 circle {
   transition: transform 200ms ease-in-out;
   transform-origin: center;
