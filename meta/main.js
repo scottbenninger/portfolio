@@ -187,14 +187,33 @@ function createScatterplot() {
   // Create dots group
   const dots = svg.append("g").attr("class", "dots");
 
+  // Compute min and max lines edited
+  const [minLines, maxLines] = d3.extent(commits, (d) => d.totalLines);
+
+  // Define a square root scale for radius to ensure accurate perception
+  const rScale = d3.scaleSqrt().domain([minLines, maxLines]).range([2, 30]);
+
+  // Sort commits by total lines in descending order so larger dots are drawn first
+  const sortedCommits = d3.sort(commits, (d) => -d.totalLines);
+
+
   // Add circles for commits
   dots
     .selectAll("circle")
-    .data(commits)
+    .data(sortedCommits)
     .join("circle")
     .attr("cx", (d) => xScale(d.datetime))
     .attr("cy", (d) => yScale(d.hourFrac))
-    .attr("r", 8)
+    .attr("r", (d) => rScale(d.totalLines)) // Set radius based on lines edited
+  .style("fill-opacity", 0.7) // Add transparency for overlapping dots
+  .on("mouseenter", function (event, d) {
+    d3.select(event.currentTarget).style("fill-opacity", 1); // Full opacity on hover
+    updateTooltipContent(d, event);
+  })
+  .on("mouseleave", function () {
+    d3.select(event.currentTarget).style("fill-opacity", 0.7); // Restore transparency
+    updateTooltipVisibility(false);
+  })
     .attr("fill", (d) => (d.hourFrac < 6 || d.hourFrac > 18 ? "steelblue" : "orange"))
     .on("mouseenter", (event, commit) => {
       updateTooltipContent(commit, event);
