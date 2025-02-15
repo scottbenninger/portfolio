@@ -17,7 +17,7 @@ async function loadData() {
 
   console.log("CSV loaded:", data.length, "entries");
 
-  displayStats(); // Compute and display stats
+  displayStats();
 }
 
 // Function to display stats
@@ -92,7 +92,7 @@ function createScatterplot() {
   // Define dimensions & margins
   const width = 1000;
   const height = 600;
-  const margin = { top: 20, right: 20, bottom: 50, left: 60 }; 
+  const margin = { top: 20, right: 20, bottom: 50, left: 60 }; // Adjusted bottom margin
 
   // Define usable area
   const usableArea = {
@@ -135,16 +135,17 @@ function createScatterplot() {
 
   console.log("Scatterplot created.");
 
-  // **X-Axis**
-  const xAxis = d3.axisBottom(xScale).ticks(10).tickFormat(d3.timeFormat("%b %d")); // Format as Month-Day
+  // **X-Axis: Formatted**
+  const xAxis = d3.axisBottom(xScale).ticks(10).tickFormat(d3.timeFormat("%b %d")); 
   svg.append("g")
-    .attr("transform", `translate(0, ${usableArea.height})`) // Position at bottom
+    .attr("transform", `translate(0, ${usableArea.height})`) 
     .call(xAxis)
     .attr("class", "x-axis")
     .selectAll("text")
-    .style("text-anchor", "middle"); // Prevent text overlap
+    .attr("transform", "rotate(-30)") // Rotates labels to prevent overlap
+    .style("text-anchor", "end"); // Aligns text properly
 
-  // **Y-Axis: Time Format**
+  // **Y-Axis: Formatted as Time**
   const yAxis = d3
     .axisLeft(yScale)
     .tickFormat((d) => String(d % 24).padStart(2, "0") + ":00"); 
