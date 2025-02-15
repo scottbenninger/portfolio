@@ -100,9 +100,9 @@ function createScatterplot() {
   // Define dimensions & margins
   const width = 1000;
   const height = 600;
-  const margin = { top: 10, right: 10, bottom: 30, left: 50 }; // Adjust left margin for Y-axis labels
+  const margin = { top: 10, right: 10, bottom: 50, left: 50 }; // Increased bottom margin for X-axis labels
 
-  // Define usable area (inside margins)
+  // Define usable area
   const usableArea = {
     top: margin.top,
     right: width - margin.right,
@@ -112,7 +112,7 @@ function createScatterplot() {
     height: height - margin.top - margin.bottom,
   };
 
-  // Create SVG with proper margins
+  // Create SVG
   const svg = d3
     .select("#chart")
     .append("svg")
@@ -121,18 +121,18 @@ function createScatterplot() {
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  // Define X (date) scale
+  // **Fix X-Scale: Ensure Proper Date Range Mapping**
   const xScale = d3
     .scaleTime()
-    .domain(d3.extent(commits, (d) => d.datetime))
-    .range([usableArea.left, usableArea.right])
+    .domain(d3.extent(commits, (d) => d.datetime)) // Auto-detect min/max dates
+    .range([0, usableArea.width]) // Make sure the range covers the full width
     .nice();
 
-  // Define Y (time of day) scale
+  // **Fix Y-Scale: Ensure Time is Correctly Mapped**
   const yScale = d3
     .scaleLinear()
     .domain([0, 24])
-    .range([usableArea.bottom, usableArea.top]);
+    .range([usableArea.height, 0]); // Flip to match SVG coordinate system
 
   // Create dots
   svg.append("g")
@@ -140,29 +140,29 @@ function createScatterplot() {
     .selectAll("circle")
     .data(commits)
     .join("circle")
-    .attr("cx", (d) => xScale(d.datetime))
-    .attr("cy", (d) => yScale(d.hourFrac))
+    .attr("cx", (d) => xScale(d.datetime)) // Corrected X position
+    .attr("cy", (d) => yScale(d.hourFrac)) // Y position is fine
     .attr("r", 5)
     .attr("fill", "steelblue");
 
   console.log("Scatterplot created.");
 
-  // **Step 2.2: Add Axes**
-  const xAxis = d3.axisBottom(xScale);
+  // **Fix X-Axis**
+  const xAxis = d3.axisBottom(xScale).ticks(6);
+
+  // **Fix Y-Axis: Time Format**
   const yAxis = d3
     .axisLeft(yScale)
-    .tickFormat((d) => String(d % 24).padStart(2, "0") + ":00"); // Format as hours
+    .tickFormat((d) => String(d % 24).padStart(2, "0") + ":00"); // Formats as HH:00
 
-  // Add X axis
-  svg
-    .append("g")
-    .attr("transform", `translate(0, ${usableArea.bottom})`)
+  // **Add X-axis**
+  svg.append("g")
+    .attr("transform", `translate(0, ${usableArea.height})`) // Position at bottom
     .call(xAxis);
 
-  // Add Y axis
-  svg
-    .append("g")
-    .attr("transform", `translate(${usableArea.left}, 0)`)
+  // **Add Y-axis**
+  svg.append("g")
+    .attr("transform", `translate(0, 0)`) // Align to left
     .call(yAxis);
 
   console.log("Axes added to scatterplot.");
