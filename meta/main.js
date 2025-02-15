@@ -193,7 +193,7 @@ function createScatterplot() {
   // Define a square root scale for radius to ensure accurate perception
   const rScale = d3
   .scaleSqrt()
-  .domain([minLines, Math.min(maxLines, 500)]) // Cap scaling at 5000 lines
+  .domain([minLines, Math.min(maxLines, 200)]) // Cap scaling at 5000 lines
   .range([3, 20]); // Prevent excessive size growth
 
 
