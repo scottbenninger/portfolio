@@ -85,8 +85,7 @@ function processCommits() {
   console.log("Commits array processed:", commits);
 }
 
-// Function to update tooltip content
-function updateTooltipContent(commit) {
+function updateTooltipContent(commit, event) {
   const tooltip = document.getElementById("commit-tooltip");
   const link = document.getElementById("commit-link");
   const date = document.getElementById("commit-date");
@@ -95,7 +94,7 @@ function updateTooltipContent(commit) {
   const lines = document.getElementById("commit-lines");
 
   if (Object.keys(commit).length === 0) {
-    updateTooltipVisibility(false);
+    tooltip.classList.remove("visible");
     return;
   }
 
@@ -106,20 +105,10 @@ function updateTooltipContent(commit) {
   author.textContent = commit.author;
   lines.textContent = commit.totalLines;
 
-  updateTooltipVisibility(true);
-}
-
-// Function to update tooltip visibility
-function updateTooltipVisibility(isVisible) {
-  const tooltip = document.getElementById("commit-tooltip");
-  tooltip.hidden = !isVisible;
-}
-
-// Function to position tooltip near the cursor
-function updateTooltipPosition(event) {
-  const tooltip = document.getElementById("commit-tooltip");
-  tooltip.style.left = `${event.clientX + 10}px`;
+  // Position tooltip near the mouse pointer
   tooltip.style.top = `${event.clientY + 10}px`;
+  tooltip.style.left = `${event.clientX + 10}px`;
+  tooltip.classList.add("visible");
 }
 
 // Function to create scatterplot
@@ -145,7 +134,7 @@ function createScatterplot() {
   const svg = d3
     .select("#chart")
     .append("svg")
-    .attr("width", "100%") // Make it responsive
+    .attr("width", "100%")  // Make it responsive
     .attr("height", height)
     .attr("viewBox", `0 0 ${width} ${height}`)
     .style("max-width", "none")
@@ -193,17 +182,18 @@ function createScatterplot() {
     .attr("r", 8)
     .attr("fill", (d) => (d.hourFrac < 6 || d.hourFrac > 18 ? "steelblue" : "orange"))
     .on("mouseenter", (event, commit) => {
-      updateTooltipContent(commit);
-      updateTooltipVisibility(true);
-      updateTooltipPosition(event);
-    })
-    .on("mousemove", (event) => {
-      updateTooltipPosition(event);
-    })
-    .on("mouseleave", () => {
-      updateTooltipContent({});
-      updateTooltipVisibility(false);
-    });
+      updateTooltipContent(commit, event);
+  })
+  .on("mousemove", (event) => {
+    const tooltip = document.getElementById("commit-tooltip");
+    tooltip.style.top = `${event.clientY + 10}px`;
+    tooltip.style.left = `${event.clientX + 10}px`;
+  })
+  .on("mouseleave", () => {
+    updateTooltipContent({});
+  });
+
+
 
   console.log("Scatterplot created.");
 }
