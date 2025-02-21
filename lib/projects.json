@@ -12,10 +12,11 @@
     "description": "Practicing Deceptive imaging"
   },
   {
-    "title": "Project 3",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "ok"
+    "title": "Bike Tracker",
+    "description": "An interactive visualization of Bluebikes traffic using Mapbox and D3.",
+    "image": "assets/bike-tracker.png",
+    "url": "https://scottbenninger.github.io/bikewatching/",
+    "year": 2025
   },
   {
     "title": "Project 4",
