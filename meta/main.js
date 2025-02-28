@@ -1,6 +1,5 @@
 let data = [];
-let xScale;
-let yScale;
+let xScale, yScale;
 let brushSelection = null;
 let commitProgress = 100;
 let timeScale;
