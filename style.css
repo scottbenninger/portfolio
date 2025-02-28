@@ -561,3 +561,15 @@ circle.selected {
   fill: #ff6b6b;
 }
 
+#filter-container {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#selectedTime {
+  margin-left: auto;
+  font-weight: bold;
+}
+
