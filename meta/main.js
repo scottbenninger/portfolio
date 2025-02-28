@@ -1,6 +1,7 @@
 // Global variables
 let data = [];
 let commits = [];
+let selectedCommits = [];
 let brushSelection = null;
 let xScale, yScale; // Ensure scales are globally accessible
 
@@ -130,12 +131,16 @@ function updateTooltipPosition(event) {
 
 function brushed(event) {
   brushSelection = event.selection;
+  selectedCommits = brushSelection
+    ? commits.filter(isCommitSelected)
+    : [];
   updateSelection();
 }
 
+
 function isCommitSelected(commit) {
-  if (!brushSelection) return false;
-  
+  if (!brushSelection) return selectedCommits.includes(commit);
+
   const [[x0, y0], [x1, y1]] = brushSelection;
   const commitX = xScale(commit.datetime);
   const commitY = yScale(commit.hourFrac);
@@ -143,11 +148,18 @@ function isCommitSelected(commit) {
   return commitX >= x0 && commitX <= x1 && commitY >= y0 && commitY <= y1;
 }
 
+
 function updateSelection() {
   d3.selectAll("circle").classed("selected", (d) => isCommitSelected(d));
-  updateSelectionCount();
+
+  const countElement = document.getElementById("selection-count");
+  countElement.textContent = `${
+    selectedCommits.length || "No"
+  } commits selected`;
+
   updateLanguageBreakdown();
 }
+
 
 function updateSelectionCount() {
   const selectedCommits = brushSelection ? commits.filter(isCommitSelected) : [];
@@ -291,12 +303,10 @@ function createScatterplot() {
     .attr("r", (d) => Math.min(rScale(d.totalLines), 25)) // Hard cap at 25px radius
   .style("fill-opacity", 0.7) // Add transparency for overlapping dots
   .on("mouseenter", function (event, d) {
-    d3.select(event.currentTarget).style("fill-opacity", 1); // Full opacity on hover
-    updateTooltipContent(d, event);
+    d3.select(event.currentTarget).classed("selected", isCommitSelected(d));
   })
   .on("mouseleave", function () {
-    d3.select(event.currentTarget).style("fill-opacity", 0.7); // Restore transparency
-    updateTooltipVisibility(false);
+    d3.select(event.currentTarget).classed("selected", false);
   })
     .attr("fill", (d) => (d.hourFrac < 6 || d.hourFrac > 18 ? "steelblue" : "orange"))
     .on("mouseenter", (event, commit) => {
